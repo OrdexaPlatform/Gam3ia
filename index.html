@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>جمعيتي – إدارة الجمعيات المالية</title>
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== CSS Variables & Reset ===== */
+        :root {
+            --bg-main: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.10);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --transition: 0.25s ease;
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --primary-dark: #1d4ed8;
+            --success: #22c55e;
+            --success-light: #dcfce7;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --info: #3b82f6;
+            --info-light: #dbeafe;
+            --orange: #f97316;
+            --orange-light: #ffedd5;
+            --gray: #94a3b8;
+            --gray-light: #f1f5f9;
+            --font: 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+            --header-height: 68px;
+            --nav-width: 0px;
+            --rtl: true;
+        }
+        [data-theme="dark"] {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --gray-light: #1e293b;
+            --primary-light: #1e3a5f;
+            --success-light: #064e3b;
+            --warning-light: #78350f;
+            --danger-light: #7f1d1d;
+            --info-light: #1e3a5f;
+            --orange-light: #7c2d12;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg-main);
+            color: var(--text-primary);
+            transition: background var(--transition), color var(--transition);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--bg-main);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            width: 100%;
+            transition: border var(--transition), box-shadow var(--transition);
+            outline: none;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* ===== Utilities ===== */
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        .flex {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--text-muted);
+        }
+        .text-sm {
+            font-size: 0.85rem;
+        }
+        .text-xs {
+            font-size: 0.72rem;
+        }
+        .fw-bold {
+            font-weight: 700;
+        }
+        .mt-1 {
+            margin-top: 8px;
+        }
+        .mt-2 {
+            margin-top: 16px;
+        }
+        .mt-3 {
+            margin-top: 24px;
+        }
+        .mb-1 {
+            margin-bottom: 8px;
+        }
+        .mb-2 {
+            margin-bottom: 16px;
+        }
+        .gap-1 {
+            gap: 8px;
+        }
+        .gap-2 {
+            gap: 16px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .relative {
+            position: relative;
+        }
+
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background var(--transition), transform 0.15s, box-shadow var(--transition);
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        }
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #16a34a;
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+        }
+        .btn-warning {
+            background: var(--warning);
+            color: #fff;
+        }
+        .btn-warning:hover {
+            background: #d97706;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .btn-ghost {
+            background: var(--gray-light);
+            color: var(--text-secondary);
+        }
+        .btn-ghost:hover {
+            background: var(--border-color);
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            border-radius: var(--radius-xs);
+        }
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        /* ===== Cards ===== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px 24px;
+            transition: background var(--transition), box-shadow var(--transition), transform 0.2s;
+            border: 1px solid var(--border-color);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* ===== Header / Navbar ===== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 16px;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(12px);
+            transition: background var(--transition), border var(--transition);
+        }
+        .navbar-brand {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar-brand i {
+            font-size: 1.5rem;
+        }
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .navbar-actions .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            color: var(--text-secondary);
+            transition: background var(--transition), color var(--transition);
+            position: relative;
+        }
+        .navbar-actions .btn-icon:hover {
+            background: var(--border-color);
+        }
+        .badge-dot {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-card);
+        }
+        .navbar-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+
+        /* ===== Dashboard Stats ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        .stat-icon.blue {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .stat-icon.green {
+            background: var(--success-light);
+            color: var(--success);
+        }
+        .stat-icon.yellow {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+        .stat-icon.red {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+        .stat-icon.orange {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+        .stat-icon.gray {
+            background: var(--gray-light);
+            color: var(--text-muted);
+        }
+        .stat-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .stat-info .number {
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .stat-info .label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ===== Section ===== */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: var(--primary);
+        }
+
+        /* ===== Tables ===== */
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 600px;
+        }
+        table th {
+            background: var(--gray-light);
+            color: var(--text-secondary);
+            font-weight: 600;
+            padding: 12px 14px;
+            text-align: right;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        table tr:last-child td {
+            border-bottom: none;
+        }
+        table tr:hover td {
+            background: var(--gray-light);
+        }
+
+        /* ===== Status Badges ===== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .badge-success {
+            background: var(--success-light);
+            color: #16a34a;
+        }
+        .badge-warning {
+            background: var(--warning-light);
+            color: #d97706;
+        }
+        .badge-danger {
+            background: var(--danger-light);
+            color: #dc2626;
+        }
+        .badge-info {
+            background: var(--info-light);
+            color: var(--info);
+        }
+        .badge-gray {
+            background: var(--gray-light);
+            color: var(--text-muted);
+        }
+        .badge-orange {
+            background: var(--orange-light);
+            color: var(--orange);
+        }
+
+        /* ===== Progress Bar ===== */
+        .progress-wrap {
+            background: var(--gray-light);
+            border-radius: 999px;
+            height: 8px;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 6px;
+        }
+        .progress-bar {
+            height: 100%;
+            border-radius: 999px;
+            background: var(--primary);
+            transition: width 0.5s ease;
+        }
+        .progress-bar.green {
+            background: var(--success);
+        }
+        .progress-bar.yellow {
+            background: var(--warning);
+        }
+        .progress-bar.red {
+            background: var(--danger);
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 28px 32px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .modal-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background var(--transition);
+        }
+        .modal-close:hover {
+            background: var(--border-color);
+        }
+        .modal .form-group {
+            margin-bottom: 16px;
+        }
+        .modal .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            color: var(--text-secondary);
+        }
+        .modal .form-group .hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .modal .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .modal-actions .btn {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        /* ===== Toast ===== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            left: 16px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 380px;
+            width: 100%;
+        }
+        .toast {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            box-shadow: var(--shadow-hover);
+            border-right: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.35s ease;
+            border: 1px solid var(--border-color);
+        }
+        .toast.success {
+            border-right-color: var(--success);
+        }
+        .toast.error {
+            border-right-color: var(--danger);
+        }
+        .toast.warning {
+            border-right-color: var(--warning);
+        }
+        .toast.info {
+            border-right-color: var(--info);
+        }
+        .toast i {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .toast .toast-msg {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+        .toast .toast-close {
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            padding: 0 4px;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== Association Cards ===== */
+        .assoc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+        }
+        .assoc-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .assoc-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        .assoc-card .name {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+        .assoc-card .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+        .assoc-card .meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .assoc-card .actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .modal {
+                padding: 20px 16px;
+                margin: 10px;
+            }
+            .modal .form-row {
+                grid-template-columns: 1fr;
+            }
+            .navbar-brand {
+                font-size: 1.05rem;
+            }
+            .navbar-date {
+                font-size: 0.7rem;
+            }
+            .assoc-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-card {
+                padding: 14px 16px;
+            }
+            .stat-info .number {
+                font-size: 1.3rem;
+            }
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            .toast-container {
+                left: 8px;
+                right: 8px;
+                max-width: 100%;
+                top: 72px;
+            }
+            .card {
+                padding: 16px;
+            }
+            .section-title {
+                font-size: 1.05rem;
+            }
+            .modal-actions .btn {
+                flex: 1 1 100%;
+            }
+            table {
+                font-size: 0.8rem;
+                min-width: 480px;
+            }
+            table th,
+            table td {
+                padding: 8px 10px;
+            }
+            .navbar-actions .btn-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 0.95rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-card {
+                padding: 12px;
+                gap: 10px;
+            }
+            .stat-info .number {
+                font-size: 1.1rem;
+            }
+            .stat-info .label {
+                font-size: 0.65rem;
+            }
+            .stat-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 0.9rem;
+            }
+            .container {
+                padding: 0 10px;
+            }
+            .btn {
+                padding: 8px 14px;
+                font-size: 0.82rem;
+            }
+            .btn-sm {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+            .navbar {
+                padding: 0 10px;
+                height: 60px;
+            }
+            .navbar-brand {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ===== Page Sections ===== */
+        .page {
+            display: none;
+            animation: fadeUp 0.3s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Collection Queue ===== */
+        .queue-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--gray-light);
+            margin-bottom: 6px;
+            border-right: 4px solid var(--text-muted);
+        }
+        .queue-item.active {
+            border-right-color: var(--success);
+            background: var(--success-light);
+        }
+        .queue-item.done {
+            border-right-color: var(--gray);
+            opacity: 0.6;
+        }
+        .queue-item.upcoming {
+            border-right-color: var(--info);
+        }
+        .queue-item .q-num {
+            font-weight: 700;
+            color: var(--text-muted);
+            width: 28px;
+            font-size: 0.85rem;
+        }
+        .queue-item .q-name {
+            flex: 1;
+            font-weight: 600;
+        }
+        .queue-item .q-status {
+            font-size: 0.75rem;
+        }
+
+        /* ===== Month Tracker ===== */
+        .month-tracker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .month-chip {
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: var(--gray-light);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .month-chip.done {
+            background: var(--success-light);
+            color: #16a34a;
+            border-color: var(--success);
+        }
+        .month-chip.current {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        .month-chip.upcoming {
+            opacity: 0.5;
+        }
+        .month-chip.partial {
+            background: var(--warning-light);
+            color: #d97706;
+            border-color: var(--warning);
+        }
+
+        /* ===== Reports ===== */
+        .report-stat {
+            text-align: center;
+            padding: 16px;
+            background: var(--gray-light);
+            border-radius: var(--radius-sm);
+        }
+        .report-stat .num {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        .report-stat .lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== Settings ===== */
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        .setting-item .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .setting-item .left i {
+            width: 28px;
+            color: var(--text-muted);
+        }
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background: var(--border-color);
+            border-radius: 999px;
+            position: relative;
+            cursor: pointer;
+            transition: background var(--transition);
+            flex-shrink: 0;
+        }
+        .toggle.active {
+            background: var(--primary);
+        }
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform var(--transition);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+        .toggle.active::after {
+            transform: translateX(-20px);
+        }
+
+        /* ===== Search ===== */
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .search-bar input {
+            flex: 1;
+            min-width: 180px;
+        }
+        .search-bar select {
+            min-width: 140px;
+        }
+
+        /* ===== Misc ===== */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
+        .empty-state h3 {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+        .inline-flex {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .gap-4 {
+            gap: 4px;
+        }
+        .flex-1 {
+            flex: 1;
+        }
+        .text-ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+
+        /* Association detail header */
+        .detail-header {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .detail-header .name {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 28px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .detail-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .detail-meta i {
+            color: var(--text-muted);
+            width: 18px;
+        }
+
+        /* Responsive table: card view on mobile */
+        @media (max-width: 640px) {
+            .table-wrap table {
+                min-width: 100%;
+            }
+            .table-wrap table thead {
+                display: none;
+            }
+            .table-wrap table tbody tr {
+                display: block;
+                padding: 12px 0;
+                border-bottom: 2px solid var(--border-color);
+            }
+            .table-wrap table tbody tr:last-child {
+                border-bottom: none;
+            }
+            .table-wrap table tbody td {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 6px 10px;
+                border-bottom: none;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            .table-wrap table tbody td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                font-size: 0.75rem;
+                color: var(--text-muted);
+                flex-shrink: 0;
+            }
+            .table-wrap table tbody td:last-child {
+                border-bottom: none;
+            }
+            .table-wrap table tbody td .badge,
+            .table-wrap table tbody td .btn {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="flex">
+            <div class="navbar-brand">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>جمعيتي</span>
+            </div>
+            <span class="navbar-date" id="navbarDate"></span>
+        </div>
+        <div class="navbar-actions">
+            <button class="btn-icon" onclick="toggleTheme()" title="الوضع الليلي">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <button class="btn-icon relative" onclick="toggleNotifications()" title="الإشعارات">
+                <i class="fas fa-bell"></i>
+                <span class="badge-dot" id="notifBadge" style="display:none;">0</span>
+            </button>
+            <button class="btn-icon" onclick="navigateTo('settings')" title="الإعدادات">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openAddAssociation()">
+                <i class="fas fa-plus"></i> جمعية جديدة
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== MAIN ===== -->
+    <div class="container" style="padding-top:20px;padding-bottom:40px;">
+
+        <!-- ===== PAGE: DASHBOARD ===== -->
+        <div class="page active" id="page-dashboard">
+            <!-- Stats -->
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <!-- Quick Actions & Alerts -->
+            <div class="card mb-2" style="background:var(--primary-light);border-color:var(--primary);">
+                <div class="flex-between">
+                    <div class="flex gap-1">
+                        <i class="fas fa-bullhorn" style="color:var(--primary);font-size:1.2rem;"></i>
+                        <span style="font-weight:600;">ما الذي يحتاج إلى متابعة؟</span>
+                    </div>
+                    <span id="quickSummary" style="font-size:0.9rem;color:var(--text-secondary);">لا توجد تنبيهات</span>
+                </div>
+            </div>
+
+            <!-- Collections Queue -->
+            <div class="card mb-2">
+                <div class="card-header">
+                    <span><i class="fas fa-trophy" style="color:var(--warning);"></i> ترتيب القبض</span>
+                    <span class="text-sm text-muted">المستحق لهذا الشهر</span>
+                </div>
+                <div id="collectionQueue"></div>
+            </div>
+
+            <!-- Associations Grid -->
+            <div class="flex-between mb-1">
+                <div class="section-title"><i class="fas fa-users"></i> الجمعيات</div>
+                <div class="flex gap-1">
+                    <button class="btn btn-sm btn-ghost" onclick="openAddAssociation()"><i class="fas fa-plus"></i> إضافة</button>
+                </div>
+            </div>
+            <div class="assoc-grid" id="assocGrid"></div>
+        </div>
+
+        <!-- ===== PAGE: ASSOCIATION DETAIL ===== -->
+        <div class="page" id="page-detail">
+            <button class="btn btn-ghost btn-sm mb-2" onclick="navigateTo('dashboard')">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </button>
+            <div id="detailContent"></div>
+        </div>
+
+        <!-- ===== PAGE: REPORTS ===== -->
+        <div class="page" id="page-reports">
+            <div class="flex-between mb-2">
+                <div class="section-title"><i class="fas fa-chart-pie"></i> التقارير</div>
+                <button class="btn btn-sm btn-ghost" onclick="navigateTo('dashboard')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            </div>
+            <div id="reportsContent"></div>
+        </div>
+
+        <!-- ===== PAGE: SETTINGS ===== -->
+        <div class="page" id="page-settings">
+            <div class="flex-between mb-2">
+                <div class="section-title"><i class="fas fa-cog"></i> الإعدادات</div>
+                <button class="btn btn-sm btn-ghost" onclick="navigateTo('dashboard')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            </div>
+            <div class="card" id="settingsContent"></div>
+        </div>
+
+        <!-- ===== PAGE: NOTIFICATIONS ===== -->
+        <div class="page" id="page-notifications">
+            <div class="flex-between mb-2">
+                <div class="section-title"><i class="fas fa-bell"></i> الإشعارات</div>
+                <button class="btn btn-sm btn-ghost" onclick="navigateTo('dashboard')"><i class="fas fa-arrow-right"></i> رجوع</button>
+            </div>
+            <div class="card" id="notificationsList"></div>
+        </div>
+
+    </div>
+
+    <!-- ===== MODAL: Add / Edit Association ===== -->
+    <div class="modal-overlay" id="assocModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="assocModalTitle">جمعية جديدة</h2>
+                <button class="modal-close" onclick="closeModal('assocModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="assocForm" onsubmit="saveAssociation(event)">
+                <input type="hidden" id="editAssocId" value="" />
+                <div class="form-group">
+                    <label>اسم الجمعية <span style="color:var(--danger);">*</span></label>
+                    <input type="text" id="assocName" placeholder="مثال: جمعية الأصدقاء" required />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>قيمة الجمعية الإجمالية <span style="color:var(--danger);">*</span></label>
+                        <input type="number" id="assocTotal" placeholder="10000" required min="1" />
+                    </div>
+                    <div class="form-group">
+                        <label>عدد الأشهر <span style="color:var(--danger);">*</span></label>
+                        <input type="number" id="assocMonths" placeholder="10" required min="1" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>تاريخ البداية <span style="color:var(--danger);">*</span></label>
+                        <input type="date" id="assocStart" required />
+                    </div>
+                    <div class="form-group">
+                        <label>تاريخ الانتهاء (تلقائي)</label>
+                        <input type="date" id="assocEnd" readonly style="background:var(--gray-light);" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>عدد الأعضاء <span style="color:var(--danger);">*</span></label>
+                        <input type="number" id="assocMembersCount" placeholder="10" required min="1" />
+                    </div>
+                    <div class="form-group">
+                        <label>قيمة الدفع الشهري لكل عضو</label>
+                        <input type="text" id="assocMonthly" readonly style="background:var(--gray-light);" />
+                    </div>
+                </div>
+                <div class="form-group" id="membersNamesGroup" style="display:none;">
+                    <label>أسماء الأعضاء <span style="color:var(--danger);">*</span></label>
+                    <div id="membersNamesContainer"></div>
+                    <div class="hint">أدخل اسم كل عضو في حقل منفصل</div>
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات (اختياري)</label>
+                    <textarea id="assocNotes" placeholder="أي ملاحظات حول الجمعية..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> حفظ</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('assocModal')">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Record Payment ===== -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-money-bill-wave" style="color:var(--success);"></i> تسجيل دفعة</h2>
+                <button class="modal-close" onclick="closeModal('paymentModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="paymentForm" onsubmit="recordPayment(event)">
+                <input type="hidden" id="payAssocId" />
+                <input type="hidden" id="payMemberId" />
+                <input type="hidden" id="payMonth" />
+                <div class="form-group">
+                    <label>العضو</label>
+                    <input type="text" id="payMemberName" readonly style="background:var(--gray-light);" />
+                </div>
+                <div class="form-group">
+                    <label>المبلغ المطلوب</label>
+                    <input type="text" id="payAmount" readonly style="background:var(--gray-light);" />
+                </div>
+                <div class="form-group">
+                    <label>طريقة الدفع <span style="color:var(--danger);">*</span></label>
+                    <select id="payMethod" required>
+                        <option value="">اختر طريقة الدفع</option>
+                        <option value="نقدي">💵 نقدي</option>
+                        <option value="تحويل بنكي">🏦 تحويل بنكي</option>
+                        <option value="Vodafone Cash">📱 Vodafone Cash</option>
+                        <option value="InstaPay">📱 InstaPay</option>
+                        <option value="محفظة إلكترونية">📱 محفظة إلكترونية</option>
+                        <option value="أخرى">🔄 أخرى</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ملاحظة (اختياري)</label>
+                    <input type="text" id="payNote" placeholder="أي ملاحظة..." />
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> تأكيد الدفع</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('paymentModal')">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Confirm ===== -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal" style="max-width:420px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i> تأكيد</h2>
+                <button class="modal-close" onclick="closeModal('confirmModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="confirmMessage" style="font-size:1rem;margin-bottom:16px;"></div>
+            <div class="modal-actions">
+                <button class="btn btn-danger" id="confirmBtn"><i class="fas fa-check"></i> تأكيد</button>
+                <button class="btn btn-outline" onclick="closeModal('confirmModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Month Detail ===== -->
+    <div class="modal-overlay" id="monthModal">
+        <div class="modal" style="max-width:600px;">
+            <div class="modal-header">
+                <h2 id="monthModalTitle">تفاصيل الشهر</h2>
+                <button class="modal-close" onclick="closeModal('monthModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="monthDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: View Member ===== -->
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal" style="max-width:500px;">
+            <div class="modal-header">
+                <h2 id="memberModalTitle">تفاصيل العضو</h2>
+                <button class="modal-close" onclick="closeModal('memberModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="memberDetailContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ======================================================================
+        //  DATA LAYER
+        // ======================================================================
+        const STORAGE_KEY = 'jam3yati_data';
+
+        function getDefaultData() {
+            return {
+                associations: [],
+                settings: {
+                    appName: 'جمعيتي',
+                    currency: 'جنيه مصري',
+                    darkMode: false,
+                    notifications: {
+                        delay: true,
+                        completion: true,
+                        preCollection: true
+                    }
+                },
+                notifications: [],
+                nextId: 1
+            };
+        }
+
+        let data = loadData();
+
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    // ensure all fields exist
+                    if (!parsed.settings) parsed.settings = getDefaultData().settings;
+                    if (!parsed.notifications) parsed.notifications = [];
+                    if (!parsed.nextId) parsed.nextId = 1;
+                    if (!parsed.associations) parsed.associations = [];
+                    return parsed;
+                }
+            } catch (e) { console.warn('Load data error', e); }
+            return getDefaultData();
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) { console.warn('Save error', e); }
+        }
+
+        function genId() { return data.nextId++; }
+
+        // ======================================================================
+        //  HELPERS
+        // ======================================================================
+        function formatCurrency(amount) {
+            return Number(amount).toLocaleString('ar-EG') + ' ' + data.settings.currency;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '—';
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function formatDateShort(dateStr) {
+            if (!dateStr) return '—';
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('ar-EG', { month: 'short', year: 'numeric' });
+        }
+
+        function todayStr() {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2,
+            '0');
+        }
+
+        function monthLabel(year, month) {
+            const d = new Date(year, month - 1, 1);
+            return d.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' });
+        }
+
+        function monthKey(year, month) {
+            return year + '-' + String(month).padStart(2, '0');
+        }
+
+        function getMonthFromKey(key) {
+            const parts = key.split('-');
+            return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
+        }
+
+        function isSameMonth(a, b) {
+            return a.year === b.year && a.month === b.month;
+        }
+
+        function getCurrentMonth() {
+            const d = new Date();
+            return { year: d.getFullYear(), month: d.getMonth() + 1 };
+        }
+
+        function getMonthKeyFromDate(dateStr) {
+            const d = new Date(dateStr + 'T00:00:00');
+            return monthKey(d.getFullYear(), d.getMonth() + 1);
+        }
+
+        function addMonths(dateStr, count) {
+            const d = new Date(dateStr + 'T00:00:00');
+            d.setMonth(d.getMonth() + count);
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2,
+                '0');
+        }
+
+        function monthsBetween(start, end) {
+            const s = new Date(start + 'T00:00:00');
+            const e = new Date(end + 'T00:00:00');
+            return (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth()) + 1;
+        }
+
+        function getMonthSequence(startDate, totalMonths) {
+            const result = [];
+            const d = new Date(startDate + 'T00:00:00');
+            for (let i = 0; i < totalMonths; i++) {
+                const y = d.getFullYear(),
+                    m = d.getMonth() + 1;
+                result.push({ year: y, month: m, key: monthKey(y, m), label: monthLabel(y, m) });
+                d.setMonth(d.getMonth() + 1);
+            }
+            return result;
+        }
+
+        function getAssocMonthIndex(assoc, monthKey) {
+            return assoc.months.findIndex(m => m.key === monthKey);
+        }
+
+        function getCurrentAssocMonth(assoc) {
+            const now = getCurrentMonth();
+            const idx = assoc.months.findIndex(m => m.year === now.year && m.month === now.month);
+            if (idx >= 0) return idx;
+            // find first upcoming or current
+            for (let i = 0; i < assoc.months.length; i++) {
+                const m = assoc.months[i];
+                if (m.year > now.year || (m.year === now.year && m.month >= now.month)) return i;
+            }
+            return assoc.months.length - 1;
+        }
+
+        function getMonthStatus(assoc, idx) {
+            if (idx < 0 || idx >= assoc.months.length) return 'upcoming';
+            return assoc.months[idx].status || 'pending';
+        }
+
+        function getMemberPaymentForMonth(member, monthKey) {
+            const record = member.payments.find(p => p.month === monthKey);
+            return record || null;
+        }
+
+        function getAssocTotalCollected(assoc, monthKey) {
+            let total = 0;
+            assoc.members.forEach(m => {
+                const p = getMemberPaymentForMonth(m, monthKey);
+                if (p && p.paid) total += p.amount;
+            });
+            return total;
+        }
+
+        function getAssocMembersPaidCount(assoc, monthKey) {
+            let count = 0;
+            assoc.members.forEach(m => {
+                const p = getMemberPaymentForMonth(m, monthKey);
+                if (p && p.paid) count++;
+            });
+            return count;
+        }
+
+        function getAssocMonthProgress(assoc, idx) {
+            const month = assoc.months[idx];
+            if (!month) return { paid: 0, total: 0, percent: 0, allPaid: false };
+            const total = assoc.members.length;
+            const paid = getAssocMembersPaidCount(assoc, month.key);
+            const percent = total > 0 ? Math.round((paid / total) * 100) : 0;
+            return { paid, total, percent, allPaid: paid === total && total > 0 };
+        }
+
+        function getCollectionOrder(assoc) {
+            // If custom order exists, use it; otherwise use member order
+            if (assoc.collectionOrder && assoc.collectionOrder.length === assoc.members.length) {
+                return assoc.collectionOrder;
+            }
+            return assoc.members.map(m => m.id);
+        }
+
+        function getCurrentCollector(assoc) {
+            const order = getCollectionOrder(assoc);
+            const idx = assoc.collectionIndex || 0;
+            if (idx >= order.length) return null;
+            const memberId = order[idx];
+            return assoc.members.find(m => m.id === memberId) || null;
+        }
+
+        function getNextCollector(assoc) {
+            const order = getCollectionOrder(assoc);
+            const idx = (assoc.collectionIndex || 0) + 1;
+            if (idx >= order.length) return null;
+            const memberId = order[idx];
+            return assoc.members.find(m => m.id === memberId) || null;
+        }
+
+        function advanceCollection(assoc) {
+            const order = getCollectionOrder(assoc);
+            const idx = (assoc.collectionIndex || 0) + 1;
+            if (idx < order.length) {
+                assoc.collectionIndex = idx;
+            } else {
+                assoc.collectionIndex = 0; // cycle or mark complete
+            }
+            saveData();
+        }
+
+        function getAssocStatus(assoc) {
+            // 'active', 'completed', 'paused'
+            if (assoc.status === 'paused') return 'paused';
+            const allDone = assoc.months.every(m => m.status === 'closed' || m.status === 'completed');
+            if (allDone && assoc.months.length > 0) return 'completed';
+            return 'active';
+        }
+
+        // ======================================================================
+        //  NOTIFICATIONS
+        // ======================================================================
+        function addNotification(type, message) {
+            data.notifications.unshift({
+                id: genId(),
+                type: type, // 'success','warning','danger','info'
+                message: message,
+                read: false,
+                date: new Date().toISOString()
+            });
+            if (data.notifications.length > 100) data.notifications = data.notifications.slice(0, 100);
+            saveData();
+            renderNotificationsBadge();
+        }
+
+        function renderNotificationsBadge() {
+            const unread = data.notifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notifBadge');
+            if (unread > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = unread > 9 ? '9+' : unread;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function getNotifications() {
+            return data.notifications;
+        }
+
+        function markAllNotificationsRead() {
+            data.notifications.forEach(n => n.read = true);
+            saveData();
+            renderNotificationsBadge();
+            renderNotificationsPage();
+        }
+
+        function clearAllNotifications() {
+            data.notifications = [];
+            saveData();
+            renderNotificationsBadge();
+            renderNotificationsPage();
+        }
+
+        // ======================================================================
+        //  TOAST
+        // ======================================================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-triangle-exclamation',
+                info: 'fas fa-info-circle'
+            };
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="${icons[type] || icons.info}"></i>
+                <span class="toast-msg">${message}</span>
+                <span class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></span>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentElement) toast.remove();
+            }, 5000);
+        }
+
+        // ======================================================================
+        //  MODALS
+        // ======================================================================
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ======================================================================
+        //  CONFIRM
+        // ======================================================================
+        function confirmAction(message, callback) {
+            document.getElementById('confirmMessage').textContent = message;
+            const btn = document.getElementById('confirmBtn');
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', function() {
+                closeModal('confirmModal');
+                callback();
+            });
+            openModal('confirmModal');
+        }
+
+        // ======================================================================
+        //  NAVIGATION
+        // ======================================================================
+        function navigateTo(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+            if (page === 'dashboard') renderDashboard();
+            else if (page === 'reports') renderReports();
+            else if (page === 'settings') renderSettings();
+            else if (page === 'notifications') renderNotificationsPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ======================================================================
+        //  THEME
+        // ======================================================================
+        function toggleTheme() {
+            const dark = !data.settings.darkMode;
+            data.settings.darkMode = dark;
+            saveData();
+            applyTheme();
+        }
+
+        function applyTheme() {
+            if (data.settings.darkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                document.getElementById('themeIcon').className = 'fas fa-moon';
+            }
+        }
+
+        // ======================================================================
+        //  RENDER: DASHBOARD
+        // ======================================================================
+        function renderDashboard() {
+            const assocs = data.associations;
+            const totalAssocs = assocs.filter(a => getAssocStatus(a) === 'active').length;
+            const totalMembers = assocs.reduce((sum, a) => sum + a.members.length, 0);
+            const now = getCurrentMonth();
+            const monthKeyNow = monthKey(now.year, now.month);
+
+            let totalRequired = 0,
+                totalCollected = 0,
+                totalPaidMembers = 0,
+                totalUnpaidMembers = 0;
+            let collectorName = '—',
+                collectorAmount = 0;
+
+            assocs.forEach(a => {
+                const idx = getAssocMonthIndex(a, monthKeyNow);
+                if (idx >= 0) {
+                    const month = a.months[idx];
+                    if (month && month.status !== 'closed') {
+                        const required = a.members.length * a.monthlyPayment;
+                        totalRequired += required;
+                        const collected = getAssocTotalCollected(a, month.key);
+                        totalCollected += collected;
+                        const paid = getAssocMembersPaidCount(a, month.key);
+                        totalPaidMembers += paid;
+                        totalUnpaidMembers += (a.members.length - paid);
+                    }
+                }
+                // collector
+                const collector = getCurrentCollector(a);
+                if (collector) {
+                    collectorName = collector.name;
+                    collectorAmount = a.monthlyPayment * a.members.length;
+                }
+            });
+
+            const remaining = totalRequired - totalCollected;
+            const percent = totalRequired > 0 ? Math.round((totalCollected / totalRequired) * 100) : 0;
+
+            const stats = [
+                { icon: 'fas fa-building', color: 'blue', number: totalAssocs, label: 'الجمعيات النشطة' },
+                { icon: 'fas fa-user', color: 'green', number: totalMembers, label: 'إجمالي الأعضاء' },
+                { icon: 'fas fa-coins', color: 'yellow', number: formatCurrency(totalRequired), label: 'المطلوب هذا الشهر' },
+                { icon: 'fas fa-hand-holding-usd', color: 'green', number: formatCurrency(totalCollected),
+                label: 'تم التحصيل' },
+                { icon: 'fas fa-clock', color: 'orange', number: formatCurrency(remaining), label: 'المتبقي للتحصيل' },
+                { icon: 'fas fa-check-circle', color: 'green', number: totalPaidMembers, label: 'دفعوا' },
+                { icon: 'fas fa-times-circle', color: 'red', number: totalUnpaidMembers, label: 'لم يدفعوا' },
+                { icon: 'fas fa-crown', color: 'blue', number: collectorName, label: 'مستحق القبض هذا الشهر' }
+            ];
+
+            const grid = document.getElementById('statsGrid');
+            grid.innerHTML = stats.map(s => `
+                <div class="stat-card">
+                    <div class="stat-icon ${s.color}"><i class="${s.icon}"></i></div>
+                    <div class="stat-info">
+                        <div class="number">${s.number}</div>
+                        <div class="label">${s.label}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Quick summary
+            const alerts = [];
+            if (totalUnpaidMembers > 0) alerts.push(`🔴 ${totalUnpaidMembers} عضو لم يدفعوا`);
+            if (remaining > 0) alerts.push(`💰 متبقي ${formatCurrency(remaining)} للتحصيل`);
+            if (totalAssocs === 0) alerts.push('📌 لا توجد جمعيات نشطة');
+            if (alerts.length === 0) alerts.push('✅ كل شيء على ما يرام');
+            document.getElementById('quickSummary').textContent = alerts.join(' | ');
+
+            // Collection Queue
+            renderCollectionQueue();
+
+            // Associations Grid
+            renderAssociations();
+            renderNotificationsBadge();
+        }
+
+        function renderCollectionQueue() {
+            const container = document.getElementById('collectionQueue');
+            const assocs = data.associations.filter(a => getAssocStatus(a) === 'active');
+            if (assocs.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-trophy"></i><h3>لا توجد جمعيات نشطة</h3></div>';
+                return;
+            }
+            let html = '';
+            assocs.forEach(a => {
+                const collector = getCurrentCollector(a);
+                const order = getCollectionOrder(a);
+                if (collector) {
+                    const idx = order.indexOf(collector.id);
+                    html += `
+                        <div style="margin-bottom:12px;background:var(--gray-light);border-radius:var(--radius-sm);padding:12px 16px;">
+                            <div style="font-weight:600;color:var(--primary);font-size:0.9rem;">${a.name}</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+                                ${order.map((mid, i) => {
+                                    const m = a.members.find(mm => mm.id === mid);
+                                    if (!m) return '';
+                                    const isActive = i === idx;
+                                    const isDone = i < idx;
+                                    const cls = isActive ? 'badge-success' : (isDone ? 'badge-gray' : 'badge-info');
+                                    const icon = isActive ? '⭐' : (isDone ? '✅' : '⏳');
+                                    return `<span class="badge ${cls}">${i+1}. ${m.name} ${icon}</span>`;
+                                }).join('')}
+                            </div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">
+                                🎯 المستحق: <strong>${collector.name}</strong> — ${formatCurrency(a.monthlyPayment * a.members.length)}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            container.innerHTML = html || '<div class="empty-state"><h3>لا يوجد مستحق للقبض</h3></div>';
+        }
+
+        function renderAssociations() {
+            const container = document.getElementById('assocGrid');
+            const assocs = data.associations;
+            if (assocs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column:1/-1;">
+                        <i class="fas fa-users"></i>
+                        <h3>لا توجد جمعيات</h3>
+                        <p class="text-muted">اضغط على "جمعية جديدة" لإنشاء أول جمعية</p>
+                    </div>
+                `;
+                return;
+            }
+            container.innerHTML = assocs.map(a => {
+                const status = getAssocStatus(a);
+                const statusBadge = status === 'active' ? '🟢 نشطة' : (status === 'completed' ? '✅ مكتملة' : '⏸️ موقفة');
+                const now = getCurrentMonth();
+                const mk = monthKey(now.year, now.month);
+                const idx = getAssocMonthIndex(a, mk);
+                let progress = { paid: 0, total: 0, percent: 0 };
+                if (idx >= 0) {
+                    progress = getAssocMonthProgress(a, idx);
+                }
+                const collector = getCurrentCollector(a);
+                return `
+                    <div class="assoc-card" onclick="openAssociationDetail(${a.id})">
+                        <div class="flex-between">
+                            <span class="name">${a.name}</span>
+                            <span class="badge ${status === 'active' ? 'badge-success' : (status === 'completed' ? 'badge-info' : 'badge-warning')}">${statusBadge}</span>
+                        </div>
+                        <div class="meta">
+                            <span><i class="fas fa-calendar-alt"></i> ${formatDate(a.startDate)}</span>
+                            <span><i class="fas fa-calendar-check"></i> ${formatDate(a.endDate)}</span>
+                            <span><i class="fas fa-user"></i> ${a.members.length} عضو</span>
+                            <span><i class="fas fa-money-bill"></i> ${formatCurrency(a.monthlyPayment)}/شهر</span>
+                        </div>
+                        ${idx >= 0 ? `
+                            <div style="margin-top:8px;">
+                                <div class="flex-between text-sm">
+                                    <span>تحصيل ${monthLabel(now.year, now.month)}</span>
+                                    <span>${progress.paid}/${progress.total} (${progress.percent}%)</span>
+                                </div>
+                                <div class="progress-wrap">
+                                    <div class="progress-bar ${progress.percent >= 100 ? 'green' : (progress.percent >= 60 ? 'yellow' : 'red')}" style="width:${Math.min(progress.percent,100)}%;"></div>
+                                </div>
+                            </div>
+                        ` : ''}
+                        ${collector ? `<div style="margin-top:6px;font-size:0.8rem;color:var(--text-secondary);">🎯 المستحق: ${collector.name}</div>` : ''}
+                        <div class="actions">
+                            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();openAssociationDetail(${a.id})"><i class="fas fa-eye"></i> تفاصيل</button>
+                            <button class="btn btn-sm btn-ghost" onclick="event.stopPropagation();editAssociation(${a.id})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="event.stopPropagation();deleteAssociation(${a.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ======================================================================
+        //  ASSOCIATION CRUD
+        // ======================================================================
+        function openAddAssociation() {
+            document.getElementById('assocModalTitle').textContent = 'جمعية جديدة';
+            document.getElementById('editAssocId').value = '';
+            document.getElementById('assocForm').reset();
+            document.getElementById('assocEnd').value = '';
+            document.getElementById('assocMonthly').value = '';
+            document.getElementById('membersNamesGroup').style.display = 'none';
+            document.getElementById('membersNamesContainer').innerHTML = '';
+            document.getElementById('assocNotes').value = '';
+            // set default date
+            const today = todayStr();
+            document.getElementById('assocStart').value = today;
+            document.getElementById('assocStart').max = '2099-12-31';
+            // auto calc
+            document.getElementById('assocTotal').addEventListener('input', calcMonthly);
+            document.getElementById('assocMonths').addEventListener('input', calcMonthly);
+            document.getElementById('assocMembersCount').addEventListener('input', calcMonthly);
+            document.getElementById('assocStart').addEventListener('change', calcEndDate);
+            document.getElementById('assocMonths').addEventListener('change', calcEndDate);
+            calcMonthly();
+            calcEndDate();
+            openModal('assocModal');
+        }
+
+        function calcMonthly() {
+            const total = parseFloat(document.getElementById('assocTotal').value) || 0;
+            const members = parseInt(document.getElementById('assocMembersCount').value) || 1;
+            const months = parseInt(document.getElementById('assocMonths').value) || 1;
+            const monthly = members > 0 && months > 0 ? Math.round(total / months / members) : 0;
+            document.getElementById('assocMonthly').value = monthly > 0 ? formatCurrency(monthly) : '';
+            // generate member name fields
+            const count = parseInt(document.getElementById('assocMembersCount').value) || 0;
+            const container = document.getElementById('membersNamesContainer');
+            const group = document.getElementById('membersNamesGroup');
+            if (count > 0) {
+                group.style.display = 'block';
+                let html = '';
+                for (let i = 0; i < count; i++) {
+                    html += `
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                            <span style="font-weight:600;font-size:0.85rem;min-width:30px;">${i+1}.</span>
+                            <input type="text" class="member-name-input" placeholder="اسم العضو ${i+1}" required />
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            } else {
+                group.style.display = 'none';
+                container.innerHTML = '';
+            }
+        }
+
+        function calcEndDate() {
+            const start = document.getElementById('assocStart').value;
+            const months = parseInt(document.getElementById('assocMonths').value) || 1;
+            if (start) {
+                const end = addMonths(start, months);
+                document.getElementById('assocEnd').value = end;
+            }
+        }
+
+        function saveAssociation(e) {
+            e.preventDefault();
+            const name = document.getElementById('assocName').value.trim();
+            const totalValue = parseFloat(document.getElementById('assocTotal').value);
+            const months = parseInt(document.getElementById('assocMonths').value);
+            const startDate = document.getElementById('assocStart').value;
+            const membersCount = parseInt(document.getElementById('assocMembersCount').value);
+            const notes = document.getElementById('assocNotes').value.trim();
+            const editId = document.getElementById('editAssocId').value;
+
+            // validation
+            if (!name) { showToast('يرجى إدخال اسم الجمعية', 'error'); return; }
+            if (!totalValue || totalValue <= 0) { showToast('يرجى إدخال قيمة الجمعية الإجمالية', 'error'); return; }
+            if (!months || months < 1) { showToast('يرجى إدخال عدد الأشهر', 'error'); return; }
+            if (!startDate) { showToast('يرجى اختيار تاريخ البداية', 'error'); return; }
+            if (!membersCount || membersCount < 1) { showToast('يرجى إدخال عدد الأعضاء', 'error'); return; }
+
+            // member names
+            const nameInputs = document.querySelectorAll('.member-name-input');
+            const memberNames = [];
+            nameInputs.forEach(inp => {
+                const val = inp.value.trim();
+                if (val) memberNames.push(val);
+            });
+            if (memberNames.length !== membersCount) {
+                showToast('يرجى إدخال أسماء جميع الأعضاء', 'error');
+                return;
+            }
+
+            const monthlyPayment = Math.round(totalValue / months / membersCount);
+            const endDate = addMonths(startDate, months);
+
+            // Build month sequence
+            const monthSeq = getMonthSequence(startDate, months);
+
+            if (editId) {
+                // Edit existing
+                const assoc = data.associations.find(a => a.id === parseInt(editId));
+                if (assoc) {
+                    // Preserve existing members and payments if possible
+                    const oldMembers = assoc.members;
+                    const newMembers = memberNames.map((name, i) => {
+                        const old = oldMembers[i] || null;
+                        return {
+                            id: old ? old.id : genId(),
+                            name: name,
+                            payments: old ? old.payments : [],
+                            notes: old ? old.notes : ''
+                        };
+                    });
+                    assoc.name = name;
+                    assoc.totalValue = totalValue;
+                    assoc.startDate = startDate;
+                    assoc.endDate = endDate;
+                    assoc.totalMonths = months;
+                    assoc.monthlyPayment = monthlyPayment;
+                    assoc.members = newMembers;
+                    assoc.months = monthSeq.map(m => {
+                        const existing = assoc.months.find(mm => mm.key === m.key);
+                        return {
+                            key: m.key,
+                            label: m.label,
+                            year: m.year,
+                            month: m.month,
+                            status: existing ? existing.status : 'pending'
+                        };
+                    });
+                    assoc.notes = notes;
+                    if (!assoc.collectionOrder || assoc.collectionOrder.length !== newMembers.length) {
+                        assoc.collectionOrder = newMembers.map(m => m.id);
+                    }
+                    if (assoc.collectionIndex === undefined) assoc.collectionIndex = 0;
+                    saveData();
+                    showToast('تم تحديث الجمعية بنجاح', 'success');
+                    closeModal('assocModal');
+                    renderDashboard();
+                }
+            } else {
+                // Create new
+                const members = memberNames.map(name => ({
+                    id: genId(),
+                    name: name,
+                    payments: [],
+                    notes: ''
+                }));
+                const association = {
+                    id: genId(),
+                    name: name,
+                    totalValue: totalValue,
+                    startDate: startDate,
+                    endDate: endDate,
+                    totalMonths: months,
+                    monthlyPayment: monthlyPayment,
+                    members: members,
+                    months: monthSeq.map(m => ({ ...m, status: 'pending' })),
+                    collectionOrder: members.map(m => m.id),
+                    collectionIndex: 0,
+                    status: 'active',
+                    notes: notes,
+                    createdAt: new Date().toISOString()
+                };
+                data.associations.push(association);
+                saveData();
+                showToast('تم إنشاء الجمعية بنجاح', 'success');
+                closeModal('assocModal');
+                renderDashboard();
+                // Add notification
+                addNotification('success', `تم إنشاء جمعية "${name}" بنجاح`);
+            }
+        }
+
+        function editAssociation(id) {
+            const assoc = data.associations.find(a => a.id === id);
+            if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
+            document.getElementById('assocModalTitle').textContent = 'تعديل الجمعية';
+            document.getElementById('editAssocId').value = id;
+            document.getElementById('assocName').value = assoc.name;
+            document.getElementById('assocTotal').value = assoc.totalValue;
+            document.getElementById('assocMonths').value = assoc.totalMonths;
+            document.getElementById('assocStart').value = assoc.startDate;
+            document.getElementById('assocEnd').value = assoc.endDate;
+            document.getElementById('assocMembersCount').value = assoc.members.length;
+            document.getElementById('assocNotes').value = assoc.notes || '';
+            // fill member names
+            const container = document.getElementById('membersNamesContainer');
+            const group = document.getElementById('membersNamesGroup');
+            group.style.display = 'block';
+            let html = '';
+            assoc.members.forEach((m, i) => {
+                html += `
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                        <span style="font-weight:600;font-size:0.85rem;min-width:30px;">${i+1}.</span>
+                        <input type="text" class="member-name-input" placeholder="اسم العضو ${i+1}" value="${m.name}" required />
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            calcMonthly();
+            calcEndDate();
+            // Re-bind events
+            document.getElementById('assocTotal').addEventListener('input', calcMonthly);
+            document.getElementById('assocMonths').addEventListener('input', calcMonthly);
+            document.getElementById('assocMembersCount').addEventListener('input', calcMonthly);
+            document.getElementById('assocStart').addEventListener('change', calcEndDate);
+            document.getElementById('assocMonths').addEventListener('change', calcEndDate);
+            openModal('assocModal');
+        }
+
+        function deleteAssociation(id) {
+            const assoc = data.associations.find(a => a.id === id);
+            if (!assoc) return;
+            confirmAction(`هل أنت متأكد من حذف جمعية "${assoc.name}"؟ سيتم حذف جميع بياناتها ومدفوعاتها.`, () => {
+                data.associations = data.associations.filter(a => a.id !== id);
+                saveData();
+                showToast(`تم حذف جمعية "${assoc.name}"`, 'warning');
+                renderDashboard();
+                // if detail page is open, go back
+                if (document.getElementById('page-detail').classList.contains('active')) {
+                    navigateTo('dashboard');
+                }
+            });
+        }
+
+        // ======================================================================
+        //  ASSOCIATION DETAIL
+        // ======================================================================
+        function openAssociationDetail(id) {
+            const assoc = data.associations.find(a => a.id === id);
+            if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
+            navigateTo('detail');
+            renderAssociationDetail(assoc);
+        }
+
+        function renderAssociationDetail(assoc) {
+            const container = document.getElementById('detailContent');
+            const status = getAssocStatus(assoc);
+            const statusBadge = status === 'active' ? '🟢 نشطة' : (status === 'completed' ? '✅ مكتملة' : '⏸️ موقفة');
+            const now = getCurrentMonth();
+            const currentIdx = getAssocMonthIndex(assoc, monthKey(now.year, now.month));
+            const currentMonth = currentIdx >= 0 ? assoc.months[currentIdx] : null;
+            const collector = getCurrentCollector(assoc);
+            const progress = currentIdx >= 0 ? getAssocMonthProgress(assoc, currentIdx) : { paid: 0, total: 0, percent: 0 };
+
+            let html = `
+                <div class="detail-header">
+                    <div class="flex-between">
+                        <span class="name">${assoc.name}</span>
+                        <span class="badge ${status === 'active' ? 'badge-success' : (status === 'completed' ? 'badge-info' : 'badge-warning')}">${statusBadge}</span>
+                    </div>
+                    <div class="detail-meta">
+                        <span><i class="fas fa-calendar-alt"></i> البداية: ${formatDate(assoc.startDate)}</span>
+                        <span><i class="fas fa-calendar-check"></i> النهاية: ${formatDate(assoc.endDate)}</span>
+                        <span><i class="fas fa-user"></i> الأعضاء: ${assoc.members.length}</span>
+                        <span><i class="fas fa-money-bill"></i> الدفع الشهري: ${formatCurrency(assoc.monthlyPayment)}</span>
+                        <span><i class="fas fa-coins"></i> إجمالي الجمعية: ${formatCurrency(assoc.totalValue)}</span>
+                    </div>
+                    ${currentMonth ? `
+                        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--gray-light);padding:10px 16px;border-radius:var(--radius-sm);">
+                            <span><strong>الشهر الحالي:</strong> ${currentMonth.label}</span>
+                            <span><strong>التحصيل:</strong> ${progress.paid}/${progress.total} (${progress.percent}%)</span>
+                            <div style="flex:1;min-width:100px;">
+                                <div class="progress-wrap">
+                                    <div class="progress-bar ${progress.percent >= 100 ? 'green' : (progress.percent >= 60 ? 'yellow' : 'red')}" style="width:${Math.min(progress.percent,100)}%;"></div>
+                                </div>
+                            </div>
+                            ${collector ? `<span style="font-weight:600;color:var(--success);">🎯 المستحق: ${collector.name}</span>` : ''}
+                        </div>
+                    ` : ''}
+                    ${assoc.notes ? `<div style="margin-top:8px;font-size:0.9rem;color:var(--text-secondary);"><i class="fas fa-pencil-alt"></i> ${assoc.notes}</div>` : ''}
+                </div>
+            `;
+
+            // Month Tracker
+            html += `
+                <div class="card mb-2">
+                    <div class="card-header"><span><i class="fas fa-calendar"></i> الأشهر</span></div>
+                    <div class="month-tracker">
+                        ${assoc.months.map((m, idx) => {
+                            const st = m.status || 'pending';
+                            let cls = 'month-chip';
+                            if (st === 'closed' || st === 'completed') cls += ' done';
+                            else if (st === 'current') cls += ' current';
+                            else if (st === 'pending') {
+                                const nowM = getCurrentMonth();
+                                if (m.year === nowM.year && m.month === nowM.month) cls += ' current';
+                                else if (m.year > nowM.year || (m.year === nowM.year && m.month > nowM.month)) cls += ' upcoming';
+                            }
+                            if (st === 'partial') cls += ' partial';
+                            const label = m.label;
+                            const icon = st === 'closed' || st === 'completed' ? '✅' : (st === 'current' ? '🟡' : (st === 'partial' ? '🟠' : '⚪'));
+                            return `<span class="${cls}" onclick="showMonthDetail(${assoc.id}, ${idx})">${icon} ${label}</span>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Members table
+            html += `
+                <div class="card">
+                    <div class="card-header">
+                        <span><i class="fas fa-users"></i> الأعضاء</span>
+                        <span class="text-sm text-muted">${assoc.members.length} عضو</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>العضو</th>
+                                    <th>قيمة الدفع</th>
+                                    <th>حالة الدفع</th>
+                                    <th>طريقة الدفع</th>
+                                    <th>تاريخ الدفع</th>
+                                    <th>إجمالي المدفوع</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${assoc.members.map(m => {
+                                    const currentMonthKey = currentMonth ? currentMonth.key : null;
+                                    const payment = currentMonthKey ? getMemberPaymentForMonth(m, currentMonthKey) : null;
+                                    const paid = payment && payment.paid;
+                                    const method = payment ? payment.method : '—';
+                                    const date = payment && payment.date ? formatDate(payment.date) : '—';
+                                    const totalPaid = m.payments.filter(p => p.paid).reduce((sum, p) => sum + p.amount, 0);
+                                    const statusBadge = paid ? '🟢 تم الدفع' : '🔴 لم يدفع';
+                                    const badgeClass = paid ? 'badge-success' : 'badge-danger';
+                                    const isLate = !paid && currentMonth && (currentMonth.year < now.year || (currentMonth.year === now.year && currentMonth.month < now.month));
+                                    const lateBadge = isLate ? ' (متأخر)' : '';
+                                    return `
+                                        <tr>
+                                            <td data-label="العضو"><strong>${m.name}</strong></td>
+                                            <td data-label="قيمة الدفع">${formatCurrency(assoc.monthlyPayment)}</td>
+                                            <td data-label="حالة الدفع">
+                                                <span class="badge ${badgeClass}">${statusBadge}${lateBadge}</span>
+                                                ${paid ? '<span style="color:var(--success);font-size:1.1rem;">✓</span>' : ''}
+                                            </td>
+                                            <td data-label="طريقة الدفع">${method}</td>
+                                            <td data-label="تاريخ الدفع">${date}</td>
+                                            <td data-label="إجمالي المدفوع">${formatCurrency(totalPaid)}</td>
+                                            <td data-label="الإجراءات">
+                                                <button class="btn btn-sm btn-success" onclick="openPaymentModal(${assoc.id}, ${m.id})">
+                                                    <i class="fas fa-money-bill"></i> تسجيل
+                                                </button>
+                                                <button class="btn btn-sm btn-ghost" onclick="viewMemberDetail(${assoc.id}, ${m.id})">
+                                                    <i class="fas fa-user"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            // Actions
+            html += `
+                <div class="flex gap-1 mt-2" style="flex-wrap:wrap;">
+                    <button class="btn btn-primary" onclick="openAddPaymentForAssoc(${assoc.id})"><i class="fas fa-plus"></i> تسجيل دفعة جديدة</button>
+                    <button class="btn btn-success" onclick="closeMonth(${assoc.id})"><i class="fas fa-check-circle"></i> إغلاق الشهر الحالي</button>
+                    <button class="btn btn-ghost" onclick="editAssociation(${assoc.id})"><i class="fas fa-edit"></i> تعديل</button>
+                    <button class="btn btn-danger" onclick="deleteAssociation(${assoc.id})"><i class="fas fa-trash"></i> حذف</button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // ======================================================================
+        //  PAYMENT
+        // ======================================================================
+        function openPaymentModal(assocId, memberId) {
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
+            const member = assoc.members.find(m => m.id === memberId);
+            if (!member) { showToast('العضو غير موجود', 'error'); return; }
+            const now = getCurrentMonth();
+            const monthKeyNow = monthKey(now.year, now.month);
+            const idx = getAssocMonthIndex(assoc, monthKeyNow);
+            if (idx < 0) { showToast('لا يوجد شهر حالي للجمعية', 'error'); return; }
+            const month = assoc.months[idx];
+            if (month.status === 'closed' || month.status === 'completed') {
+                showToast('هذا الشهر مغلق بالفعل', 'warning');
+                return;
+            }
+            const existing = getMemberPaymentForMonth(member, monthKeyNow);
+            if (existing && existing.paid) {
+                showToast('هذا العضو دفع بالفعل لهذا الشهر', 'warning');
+                return;
+            }
+
+            document.getElementById('payAssocId').value = assocId;
+            document.getElementById('payMemberId').value = memberId;
+            document.getElementById('payMemberName').value = member.name;
+            document.getElementById('payAmount').value = formatCurrency(assoc.monthlyPayment);
+            document.getElementById('payMethod').value = '';
+            document.getElementById('payNote').value = '';
+            document.getElementById('payMonth').value = monthKeyNow;
+            openModal('paymentModal');
+        }
+
+        function openAddPaymentForAssoc(assocId) {
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) return;
+            const now = getCurrentMonth();
+            const mk = monthKey(now.year, now.month);
+            const idx = getAssocMonthIndex(assoc, mk);
+            if (idx < 0) { showToast('لا يوجد شهر حالي', 'error'); return; }
+            const month = assoc.months[idx];
+            if (month.status === 'closed' || month.status === 'completed') {
+                showToast('الشهر الحالي مغلق', 'warning');
+                return;
+            }
+            // find first unpaid member
+            const unpaid = assoc.members.filter(m => {
+                const p = getMemberPaymentForMonth(m, mk);
+                return !p || !p.paid;
+            });
+            if (unpaid.length === 0) {
+                showToast('جميع الأعضاء دفعوا لهذا الشهر', 'success');
+                return;
+            }
+            openPaymentModal(assocId, unpaid[0].id);
+        }
+
+        function recordPayment(e) {
+            e.preventDefault();
+            const assocId = parseInt(document.getElementById('payAssocId').value);
+            const memberId = parseInt(document.getElementById('payMemberId').value);
+            const method = document.getElementById('payMethod').value;
+            const note = document.getElementById('payNote').value.trim();
+            const monthKey = document.getElementById('payMonth').value;
+
+            if (!method) { showToast('يرجى اختيار طريقة الدفع', 'error'); return; }
+
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
+            const member = assoc.members.find(m => m.id === memberId);
+            if (!member) { showToast('العضو غير موجود', 'error'); return; }
+
+            const idx = getAssocMonthIndex(assoc, monthKey);
+            if (idx < 0) { showToast('الشهر غير موجود', 'error'); return; }
+            const month = assoc.months[idx];
+            if (month.status === 'closed' || month.status === 'completed') {
+                showToast('هذا الشهر مغلق', 'error');
+                return;
+            }
+
+            // Check if already paid
+            const existing = getMemberPaymentForMonth(member, monthKey);
+            if (existing && existing.paid) {
+                showToast('هذا العضو دفع بالفعل لهذا الشهر', 'warning');
+                closeModal('paymentModal');
+                return;
+            }
+
+            // Record payment
+            const payment = {
+                month: monthKey,
+                paid: true,
+                amount: assoc.monthlyPayment,
+                method: method,
+                date: todayStr(),
+                time: new Date().toLocaleTimeString('ar-EG'),
+                note: note
+            };
+
+            // Remove old if exists
+            member.payments = member.payments.filter(p => p.month !== monthKey);
+            member.payments.push(payment);
+
+            // Update month status
+            const progress = getAssocMonthProgress(assoc, idx);
+            if (progress.allPaid) {
+                month.status = 'completed';
+                addNotification('success', `✅ اكتمل تحصيل شهر ${month.label} في جمعية "${assoc.name}"`);
+                // Check if should advance collection
+                const collector = getCurrentCollector(assoc);
+                if (collector) {
+                    addNotification('info', `🎯 ${collector.name} هو المستحق للقبض في جمعية "${assoc.name}"`);
+                }
+            } else {
+                month.status = 'partial';
+            }
+
+            saveData();
+            showToast(`تم تسجيل دفعة ${member.name} بنجاح`, 'success');
+            closeModal('paymentModal');
+            renderAssociationDetail(assoc);
+            renderDashboard();
+        }
+
+        // ======================================================================
+        //  CLOSE MONTH
+        // ======================================================================
+        function closeMonth(assocId) {
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) return;
+            const now = getCurrentMonth();
+            const mk = monthKey(now.year, now.month);
+            const idx = getAssocMonthIndex(assoc, mk);
+            if (idx < 0) { showToast('لا يوجد شهر حالي', 'error'); return; }
+            const month = assoc.months[idx];
+            if (month.status === 'closed' || month.status === 'completed') {
+                showToast('هذا الشهر مغلق بالفعل', 'warning');
+                return;
+            }
+            const progress = getAssocMonthProgress(assoc, idx);
+            if (!progress.allPaid) {
+                confirmAction(`لم يكتمل تحصيل شهر ${month.label} (${progress.paid}/${progress.total}). هل تريد إغلاق الشهر مع المتبقي؟`, () => {
+                    doCloseMonth(assoc, idx);
+                });
+            } else {
+                confirmAction(`تأكيد إغلاق شهر ${month.label}؟ سيتم حفظ البيانات والانتقال للشهر التالي.`, () => {
+                    doCloseMonth(assoc, idx);
+                });
+            }
+        }
+
+        function doCloseMonth(assoc, idx) {
+            const month = assoc.months[idx];
+            month.status = 'closed';
+            // Advance collection
+            const collector = getCurrentCollector(assoc);
+            if (collector) {
+                addNotification('success', `🎯 ${collector.name} قبض ${formatCurrency(assoc.monthlyPayment * assoc.members.length)} في ${month.label}`);
+            }
+            advanceCollection(assoc);
+            // Check if all months done
+            const allDone = assoc.months.every(m => m.status === 'closed' || m.status === 'completed');
+            if (allDone) {
+                assoc.status = 'completed';
+                addNotification('success', `🎉 اكتملت جمعية "${assoc.name}" بالكامل`);
+            }
+            saveData();
+            showToast(`تم إغلاق شهر ${month.label}`, 'success');
+            renderAssociationDetail(assoc);
+            renderDashboard();
+        }
+
+        // ======================================================================
+        //  MONTH DETAIL
+        // ======================================================================
+        function showMonthDetail(assocId, idx) {
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) return;
+            const month = assoc.months[idx];
+            if (!month) return;
+            const progress = getAssocMonthProgress(assoc, idx);
+            const paidMembers = assoc.members.filter(m => {
+                const p = getMemberPaymentForMonth(m, month.key);
+                return p && p.paid;
+            });
+            const unpaidMembers = assoc.members.filter(m => {
+                const p = getMemberPaymentForMonth(m, month.key);
+                return !p || !p.paid;
+            });
+
+            document.getElementById('monthModalTitle').textContent = `📅 ${month.label}`;
+            const container = document.getElementById('monthDetailContent');
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                    <div style="background:var(--gray-light);padding:12px;border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:1.2rem;font-weight:700;color:var(--success);">${progress.paid}</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted);">دفعوا</div>
+                    </div>
+                    <div style="background:var(--gray-light);padding:12px;border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:1.2rem;font-weight:700;color:var(--danger);">${progress.total - progress.paid}</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted);">لم يدفعوا</div>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <div class="flex-between text-sm"><span>التحصيل</span><span>${progress.percent}%</span></div>
+                    <div class="progress-wrap"><div class="progress-bar ${progress.percent >= 100 ? 'green' : (progress.percent >= 60 ? 'yellow' : 'red')}" style="width:${Math.min(progress.percent,100)}%;"></div></div>
+                </div>
+                <div style="font-weight:600;margin-top:10px;">✅ دفعوا (${paidMembers.length})</div>
+                ${paidMembers.map(m => `<div style="padding:4px 8px;background:var(--success-light);border-radius:var(--radius-xs);margin-bottom:4px;">${m.name}</div>`).join('') || '<div class="text-muted text-sm">لا يوجد</div>'}
+                <div style="font-weight:600;margin-top:10px;">❌ لم يدفعوا (${unpaidMembers.length})</div>
+                ${unpaidMembers.map(m => `<div style="padding:4px 8px;background:var(--danger-light);border-radius:var(--radius-xs);margin-bottom:4px;">${m.name}</div>`).join('') || '<div class="text-muted text-sm">لا يوجد</div>'}
+            `;
+            openModal('monthModal');
+        }
+
+        // ======================================================================
+        //  MEMBER DETAIL
+        // ======================================================================
+        function viewMemberDetail(assocId, memberId) {
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) return;
+            const member = assoc.members.find(m => m.id === memberId);
+            if (!member) return;
+            const totalPaid = member.payments.filter(p => p.paid).reduce((sum, p) => sum + p.amount, 0);
+            const totalMonths = assoc.months.length;
+            const paidMonths = member.payments.filter(p => p.paid).length;
+            const lateCount = member.payments.filter(p => {
+                if (!p.paid) return false;
+                const mk = p.month;
+                const parts = mk.split('-');
+                const mDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
+                const now = new Date();
+                return mDate < now;
+            }).length;
+
+            document.getElementById('memberModalTitle').textContent = `👤 ${member.name}`;
+            const container = document.getElementById('memberDetailContent');
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                    <div style="background:var(--gray-light);padding:12px;border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:1.2rem;font-weight:700;color:var(--primary);">${formatCurrency(totalPaid)}</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted);">إجمالي المدفوع</div>
+                    </div>
+                    <div style="background:var(--gray-light);padding:12px;border-radius:var(--radius-sm);text-align:center;">
+                        <div style="font-size:1.2rem;font-weight:700;color:var(--success);">${paidMonths}/${totalMonths}</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted);">الأشهر المدفوعة</div>
+                    </div>
+                </div>
+                <div style="font-weight:600;">📋 سجل المدفوعات</div>
+                ${member.payments.length > 0 ? member.payments.map(p => `
+                    <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-color);font-size:0.9rem;">
+                        <span>${monthLabel(getMonthFromKey(p.month).year, getMonthFromKey(p.month).month)}</span>
+                        <span class="badge ${p.paid ? 'badge-success' : 'badge-danger'}">${p.paid ? '✅ مدفوع' : '❌ غير مدفوع'}</span>
+                        <span>${p.paid ? formatCurrency(p.amount) : '—'}</span>
+                        <span class="text-muted text-sm">${p.paid ? p.method : ''}</span>
+                    </div>
+                `).join('') : '<div class="text-muted text-sm">لا توجد مدفوعات</div>'}
+                ${member.notes ? `<div style="margin-top:8px;font-size:0.9rem;color:var(--text-secondary);">📝 ${member.notes}</div>` : ''}
+            `;
+            openModal('memberModal');
+        }
+
+        // ======================================================================
+        //  REPORTS
+        // ======================================================================
+        function renderReports() {
+            const assocs = data.associations;
+            const totalAssocs = assocs.length;
+            const activeAssocs = assocs.filter(a => getAssocStatus(a) === 'active').length;
+            const completedAssocs = assocs.filter(a => getAssocStatus(a) === 'completed').length;
+            let totalMembers = 0,
+                totalCollectedAll = 0,
+                totalRequiredAll = 0;
+            const methodCount = {};
+
+            assocs.forEach(a => {
+                totalMembers += a.members.length;
+                a.members.forEach(m => {
+                    m.payments.filter(p => p.paid).forEach(p => {
+                        totalCollectedAll += p.amount;
+                        methodCount[p.method] = (methodCount[p.method] || 0) + 1;
+                    });
+                });
+                // total required
+                a.months.forEach(m => {
+                    if (m.status !== 'closed' && m.status !== 'completed') {
+                        totalRequiredAll += a.members.length * a.monthlyPayment;
+                    }
+                });
+            });
+
+            const mostUsedMethod = Object.entries(methodCount).sort((a, b) => b[1] - a[1])[0];
+            const commitment = totalRequiredAll > 0 ? Math.round((totalCollectedAll / totalRequiredAll) * 100) : 0;
+
+            const container = document.getElementById('reportsContent');
+            container.innerHTML = `
+                <div class="grid-3" style="margin-bottom:16px;">
+                    <div class="report-stat"><div class="num">${formatCurrency(totalCollectedAll)}</div><div class="lbl">إجمالي المحصل</div></div>
+                    <div class="report-stat"><div class="num">${formatCurrency(totalRequiredAll)}</div><div class="lbl">إجمالي المتبقي</div></div>
+                    <div class="report-stat"><div class="num">${totalMembers}</div><div class="lbl">إجمالي الأعضاء</div></div>
+                </div>
+                <div class="grid-3" style="margin-bottom:16px;">
+                    <div class="report-stat"><div class="num">${commitment}%</div><div class="lbl">نسبة الالتزام</div></div>
+                    <div class="report-stat"><div class="num">${mostUsedMethod ? mostUsedMethod[0] : '—'}</div><div class="lbl">أكثر طريقة دفع استخدامًا</div></div>
+                    <div class="report-stat"><div class="num">${completedAssocs}</div><div class="lbl">جمعيات مكتملة</div></div>
+                </div>
+                <div class="grid-2">
+                    <div class="report-stat"><div class="num">${activeAssocs}</div><div class="lbl">جمعيات نشطة</div></div>
+                    <div class="report-stat"><div class="num">${totalAssocs}</div><div class="lbl">إجمالي الجمعيات</div></div>
+                </div>
+                <div style="margin-top:16px;background:var(--gray-light);padding:16px;border-radius:var(--radius-sm);">
+                    <div style="font-weight:600;margin-bottom:8px;">📊 توزيع طرق الدفع</div>
+                    ${Object.entries(methodCount).map(([method, count]) => `
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                            <span style="min-width:100px;">${method}</span>
+                            <div style="flex:1;background:var(--bg-card);border-radius:999px;height:6px;overflow:hidden;">
+                                <div style="height:100%;background:var(--primary);width:${Math.min((count / totalCollectedAll) * 100, 100)}%;"></div>
+                            </div>
+                            <span class="text-sm text-muted">${count}</span>
+                        </div>
+                    `).join('') || '<div class="text-muted">لا توجد بيانات</div>'}
+                </div>
+            `;
+        }
+
+        // ======================================================================
+        //  NOTIFICATIONS PAGE
+        // ======================================================================
+        function renderNotificationsPage() {
+            const container = document.getElementById('notificationsList');
+            const notifs = getNotifications();
+            if (notifs.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-bell-slash"></i><h3>لا توجد إشعارات</h3></div>';
+                return;
+            }
+            container.innerHTML = `
+                <div class="flex-between mb-2">
+                    <span class="text-sm text-muted">${notifs.length} إشعار</span>
+                    <div class="flex gap-1">
+                        <button class="btn btn-sm btn-ghost" onclick="markAllNotificationsRead()">تحديد الكل كمقروء</button>
+                        <button class="btn btn-sm btn-danger" onclick="clearAllNotifications()">مسح الكل</button>
+                    </div>
+                </div>
+                ${notifs.map(n => `
+                    <div style="padding:10px 14px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;gap:10px;${n.read ? 'opacity:0.6;' : ''}">
+                        <span class="badge ${n.type === 'success' ? 'badge-success' : (n.type === 'warning' ? 'badge-warning' : (n.type === 'danger' ? 'badge-danger' : 'badge-info'))}">${n.type}</span>
+                        <span style="flex:1;">${n.message}</span>
+                        <span class="text-xs text-muted">${new Date(n.date).toLocaleDateString('ar-EG')}</span>
+                        ${!n.read ? `<button class="btn btn-sm btn-ghost" onclick="markNotificationRead(${n.id})"><i class="fas fa-check"></i></button>` : ''}
+                    </div>
+                `).join('')}
+            `;
+            renderNotificationsBadge();
+        }
+
+        function markNotificationRead(id) {
+            const n = data.notifications.find(not => not.id === id);
+            if (n) { n.read = true;
+                saveData();
+                renderNotificationsPage();
+                renderNotificationsBadge(); }
+        }
+
+        function toggleNotifications() {
+            navigateTo('notifications');
+        }
+
+        // ======================================================================
+        //  SETTINGS
+        // ======================================================================
+        function renderSettings() {
+            const s = data.settings;
+            const container = document.getElementById('settingsContent');
+            container.innerHTML = `
+                <div style="margin-bottom:20px;">
+                    <h3 style="margin-bottom:12px;">⚙️ إعدادات التطبيق</h3>
+                    <div class="setting-item">
+                        <div class="left"><i class="fas fa-pencil-alt"></i> اسم التطبيق</div>
+                        <input type="text" id="settingsAppName" value="${s.appName || 'جمعيتي'}" style="max-width:200px;" />
+                    </div>
+                    <div class="setting-item">
+                        <div class="left"><i class="fas fa-money-bill"></i> العملة الافتراضية</div>
+                        <input type="text" id="settingsCurrency" value="${s.currency || 'جنيه مصري'}" style="max-width:200px;" />
+                    </div>
+                    <div class="setting-item">
+                        <div class="left"><i class="fas fa-moon"></i> الوضع الليلي</div>
+                        <div class="toggle ${s.darkMode ? 'active' : ''}" onclick="toggleThemeSetting()"></div>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div style="margin-bottom:20px;">
+                    <h3 style="margin-bottom:12px;">🔔 إعدادات التنبيهات</h3>
+                    <div class="setting-item">
+                        <div class="left"><i class="fas fa-clock"></i> تنبيهات التأخير</div>
+                        <div class="toggle ${s.notifications?.delay !== false ? 'active' : ''}" onclick="toggleNotifSetting('delay')"></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="left"><i class="fas fa-check-circle"></i> تنبيهات اكتمال الشهر</div>
+                        <div class="toggle ${s.notifications?.completion !== false ? 'active' : ''}" onclick="toggleNotifSetting('completion')"></div>
+                    </div>
+                    <div class="setting-item">
+                        <div class="left"><i class="fas fa-trophy"></i> تنبيه قبل موعد القبض</div>
+                        <div class="toggle ${s.notifications?.preCollection !== false ? 'active' : ''}" onclick="toggleNotifSetting('preCollection')"></div>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div>
+                    <h3 style="margin-bottom:12px;">💾 إدارة البيانات</h3>
+                    <div class="flex gap-1" style="flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="exportData()"><i class="fas fa-download"></i> تصدير البيانات</button>
+                        <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> استيراد البيانات</button>
+                        <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)" />
+                        <button class="btn btn-warning" onclick="backupData()"><i class="fas fa-save"></i> نسخ احتياطي</button>
+                        <button class="btn btn-danger" onclick="clearAllData()"><i class="fas fa-trash"></i> مسح البيانات</button>
+                    </div>
+                </div>
+                <hr class="divider" />
+                <div class="flex gap-1" style="flex-wrap:wrap;">
+                    <button class="btn btn-outline" onclick="navigateTo('dashboard')">العودة للرئيسية</button>
+                </div>
+            `;
+            // Save app name / currency on change
+            document.getElementById('settingsAppName').addEventListener('change', function() {
+                data.settings.appName = this.value || 'جمعيتي';
+                saveData();
+                document.querySelector('.navbar-brand span').textContent = data.settings.appName;
+                showToast('تم تحديث اسم التطبيق', 'success');
+            });
+            document.getElementById('settingsCurrency').addEventListener('change', function() {
+                data.settings.currency = this.value || 'جنيه مصري';
+                saveData();
+                showToast('تم تحديث العملة', 'success');
+                renderDashboard();
+            });
+        }
+
+        function toggleThemeSetting() {
+            data.settings.darkMode = !data.settings.darkMode;
+            saveData();
+            applyTheme();
+            renderSettings();
+            renderDashboard();
+        }
+
+        function toggleNotifSetting(key) {
+            if (!data.settings.notifications) data.settings.notifications = {};
+            data.settings.notifications[key] = !data.settings.notifications[key];
+            saveData();
+            renderSettings();
+            showToast(`تم ${data.settings.notifications[key] ? 'تفعيل' : 'تعطيل'} الإعداد`, 'info');
+        }
+
+        function exportData() {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `جمعيتي_بيانات_${todayStr()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('تم تصدير البيانات بنجاح', 'success');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported.associations && imported.settings) {
+                        confirmAction('سيتم استبدال البيانات الحالية بالبيانات المستوردة. هل أنت متأكد؟', () => {
+                            data = imported;
+                            if (!data.nextId) data.nextId = 1;
+                            saveData();
+                            applyTheme();
+                            renderDashboard();
+                            showToast('تم استيراد البيانات بنجاح', 'success');
+                        });
+                    } else {
+                        showToast('ملف غير صالح', 'error');
+                    }
+                } catch (err) {
+                    showToast('خطأ في قراءة الملف', 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function backupData() {
+            exportData();
+        }
+
+        function clearAllData() {
+            confirmAction('⚠️ هل أنت متأكد من مسح جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه.', () => {
+                data = getDefaultData();
+                saveData();
+                applyTheme();
+                renderDashboard();
+                showToast('تم مسح جميع البيانات', 'warning');
+            });
+        }
+
+        // ======================================================================
+        //  SEARCH & FILTERS (simple)
+        // ======================================================================
+        // Implemented inline in dashboard via search bar
+        // We'll add a search bar in the dashboard
+        // Actually, let's add it dynamically
+
+        // ======================================================================
+        //  INIT
+        // ======================================================================
+        function init() {
+            // Set date
+            const now = new Date();
+            document.getElementById('navbarDate').textContent = now.toLocaleDateString('ar-EG', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Apply theme
+            applyTheme();
+
+            // Render
+            renderDashboard();
+
+            // Check for demo data
+            if (data.associations.length === 0) {
+                // Create demo data
+                createDemoData();
+            }
+
+            // Auto-check notifications
+            checkPendingNotifications();
+
+            // Re-run every 60s
+            setInterval(() => {
+                renderDashboard();
+                checkPendingNotifications();
+            }, 60000);
+        }
+
+        function createDemoData() {
+            const demoMembers = ['أحمد محمد', 'سارة علي', 'خالد حسن', 'منى إبراهيم', 'يوسف سعيد', 'ليلى عمر', 'محمد طارق', 'نورا فؤاد',
+                'عمر خالد', 'ريم عادل'
+            ];
+            const startDate = '2026-01-01';
+            const months = 10;
+            const totalValue = 10000;
+            const membersCount = 10;
+            const monthlyPayment = Math.round(totalValue / months / membersCount);
+
+            const members = demoMembers.slice(0, membersCount).map(name => ({
+                id: genId(),
+                name: name,
+                payments: [],
+                notes: ''
+            }));
+
+            const monthSeq = getMonthSequence(startDate, months);
+            // Mark first 3 months as done, 4th as partial
+            const monthsData = monthSeq.map((m, idx) => {
+                let status = 'pending';
+                if (idx < 3) status = 'closed';
+                else if (idx === 3) status = 'partial';
+                return { ...m, status };
+            });
+
+            // Add some payments for first 3 months
+            members.forEach((m, mi) => {
+                for (let i = 0; i < 3; i++) {
+                    const mk = monthSeq[i].key;
+                    m.payments.push({
+                        month: mk,
+                        paid: true,
+                        amount: monthlyPayment,
+                        method: ['نقدي', 'تحويل بنكي', 'Vodafone Cash'][mi % 3],
+                        date: addMonths(startDate, i),
+                        time: '10:00',
+                        note: ''
+                    });
+                }
+                // For 4th month, some paid
+                if (mi < 3) {
+                    const mk = monthSeq[3].key;
+                    m.payments.push({
+                        month: mk,
+                        paid: true,
+                        amount: monthlyPayment,
+                        method: 'نقدي',
+                        date: addMonths(startDate, 3),
+                        time: '10:00',
+                        note: ''
+                    });
+                }
+            });
+
+            const assoc = {
+                id: genId(),
+                name: 'جمعية الأصدقاء',
+                totalValue: totalValue,
+                startDate: startDate,
+                endDate: addMonths(startDate, months),
+                totalMonths: months,
+                monthlyPayment: monthlyPayment,
+                members: members,
+                months: monthsData,
+                collectionOrder: members.map(m => m.id),
+                collectionIndex: 3,
+                status: 'active',
+                notes: 'جمعية تجريبية للأصدقاء',
+                createdAt: new Date().toISOString()
+            };
+
+            data.associations.push(assoc);
+            saveData();
+            addNotification('info', '📌 تم إنشاء بيانات تجريبية لتوضيح طريقة الاستخدام');
+        }
+
+        function checkPendingNotifications() {
+            // Check for late payments, upcoming deadlines, etc.
+            const now = getCurrentMonth();
+            const mk = monthKey(now.year, now.month);
+            data.associations.forEach(a => {
+                const idx = getAssocMonthIndex(a, mk);
+                if (idx >= 0) {
+                    const month = a.months[idx];
+                    if (month.status !== 'closed' && month.status !== 'completed') {
+                        const progress = getAssocMonthProgress(a, idx);
+                        const unpaid = a.members.filter(m => {
+                            const p = getMemberPaymentForMonth(m, mk);
+                            return !p || !p.paid;
+                        });
+                        if (unpaid.length > 0 && data.settings.notifications?.delay !== false) {
+                            // Check if we already have a notification for this
+                            const hasNotif = data.notifications.some(n =>
+                                n.message.includes(a.name) && n.message.includes('لم يدفعوا') &&
+                                !n.read
+                            );
+                            if (!hasNotif) {
+                                addNotification('warning',
+                                    `🟠 ${unpaid.length} عضو لم يدفعوا في جمعية "${a.name}" حتى الآن`
+                                );
+                            }
+                        }
+                    }
+                }
+            });
+            renderNotificationsBadge();
+        }
+
+        // ======================================================================
+        //  START
+        // ======================================================================
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
