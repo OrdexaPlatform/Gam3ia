@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>جمعيتي – إدارة الجمعيات المالية</title>
-    <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ===== CSS Variables & Reset ===== */
@@ -38,8 +37,6 @@
             --gray-light: #f1f5f9;
             --font: 'Segoe UI', 'Tahoma', system-ui, sans-serif;
             --header-height: 68px;
-            --nav-width: 0px;
-            --rtl: true;
         }
         [data-theme="dark"] {
             --bg-main: #0f172a;
@@ -120,8 +117,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--text-secondary);
         }
-
-        /* ===== Utilities ===== */
         .container {
             max-width: 1320px;
             margin: 0 auto;
@@ -202,8 +197,6 @@
         .relative {
             position: relative;
         }
-
-        /* ===== Buttons ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -285,8 +278,6 @@
             justify-content: center;
             font-size: 1.1rem;
         }
-
-        /* ===== Cards ===== */
         .card {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -306,8 +297,6 @@
             font-weight: 600;
             font-size: 1.1rem;
         }
-
-        /* ===== Header / Navbar ===== */
         .navbar {
             position: sticky;
             top: 0;
@@ -371,8 +360,6 @@
             color: var(--text-muted);
             margin-left: 8px;
         }
-
-        /* ===== Dashboard Stats ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -443,8 +430,6 @@
             color: var(--text-muted);
             font-weight: 500;
         }
-
-        /* ===== Section ===== */
         .section-title {
             font-size: 1.25rem;
             font-weight: 700;
@@ -456,8 +441,6 @@
         .section-title i {
             color: var(--primary);
         }
-
-        /* ===== Tables ===== */
         .table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -493,8 +476,6 @@
         table tr:hover td {
             background: var(--gray-light);
         }
-
-        /* ===== Status Badges ===== */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -529,8 +510,6 @@
             background: var(--orange-light);
             color: var(--orange);
         }
-
-        /* ===== Progress Bar ===== */
         .progress-wrap {
             background: var(--gray-light);
             border-radius: 999px;
@@ -554,8 +533,6 @@
         .progress-bar.red {
             background: var(--danger);
         }
-
-        /* ===== Modal ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -644,8 +621,6 @@
             flex: 1;
             min-width: 100px;
         }
-
-        /* ===== Toast ===== */
         .toast-container {
             position: fixed;
             top: 80px;
@@ -705,8 +680,6 @@
                 transform: translateX(0);
             }
         }
-
-        /* ===== Association Cards ===== */
         .assoc-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -748,8 +721,6 @@
             margin-top: 12px;
             flex-wrap: wrap;
         }
-
-        /* ===== Responsive ===== */
         @media (max-width: 992px) {
             .grid-4 {
                 grid-template-columns: repeat(2, 1fr);
@@ -872,8 +843,6 @@
                 font-size: 0.95rem;
             }
         }
-
-        /* ===== Page Sections ===== */
         .page {
             display: none;
             animation: fadeUp 0.3s ease;
@@ -891,8 +860,6 @@
                 transform: translateY(0);
             }
         }
-
-        /* ===== Collection Queue ===== */
         .queue-item {
             display: flex;
             align-items: center;
@@ -927,8 +894,6 @@
         .queue-item .q-status {
             font-size: 0.75rem;
         }
-
-        /* ===== Month Tracker ===== */
         .month-tracker {
             display: flex;
             flex-wrap: wrap;
@@ -964,8 +929,6 @@
             color: #d97706;
             border-color: var(--warning);
         }
-
-        /* ===== Reports ===== */
         .report-stat {
             text-align: center;
             padding: 16px;
@@ -980,8 +943,6 @@
             font-size: 0.8rem;
             color: var(--text-muted);
         }
-
-        /* ===== Settings ===== */
         .setting-item {
             display: flex;
             align-items: center;
@@ -1031,8 +992,6 @@
         .toggle.active::after {
             transform: translateX(-20px);
         }
-
-        /* ===== Search ===== */
         .search-bar {
             display: flex;
             gap: 10px;
@@ -1046,8 +1005,6 @@
         .search-bar select {
             min-width: 140px;
         }
-
-        /* ===== Misc ===== */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -1084,8 +1041,6 @@
             text-overflow: ellipsis;
             max-width: 140px;
         }
-
-        /* Association detail header */
         .detail-header {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -1115,8 +1070,6 @@
             color: var(--text-muted);
             width: 18px;
         }
-
-        /* Responsive table: card view on mobile */
         @media (max-width: 640px) {
             .table-wrap table {
                 min-width: 100%;
@@ -1194,10 +1147,8 @@
 
         <!-- ===== PAGE: DASHBOARD ===== -->
         <div class="page active" id="page-dashboard">
-            <!-- Stats -->
             <div class="stats-grid" id="statsGrid"></div>
 
-            <!-- Quick Actions & Alerts -->
             <div class="card mb-2" style="background:var(--primary-light);border-color:var(--primary);">
                 <div class="flex-between">
                     <div class="flex gap-1">
@@ -1208,7 +1159,6 @@
                 </div>
             </div>
 
-            <!-- Collections Queue -->
             <div class="card mb-2">
                 <div class="card-header">
                     <span><i class="fas fa-trophy" style="color:var(--warning);"></i> ترتيب القبض</span>
@@ -1217,7 +1167,6 @@
                 <div id="collectionQueue"></div>
             </div>
 
-            <!-- Associations Grid -->
             <div class="flex-between mb-1">
                 <div class="section-title"><i class="fas fa-users"></i> الجمعيات</div>
                 <div class="flex gap-1">
@@ -1283,8 +1232,8 @@
                         <input type="number" id="assocTotal" placeholder="10000" required min="1" />
                     </div>
                     <div class="form-group">
-                        <label>عدد الأشهر <span style="color:var(--danger);">*</span></label>
-                        <input type="number" id="assocMonths" placeholder="10" required min="1" />
+                        <label>عدد الأعضاء <span style="color:var(--danger);">*</span></label>
+                        <input type="number" id="assocMembersCount" placeholder="10" required min="1" />
                     </div>
                 </div>
                 <div class="form-row">
@@ -1293,14 +1242,14 @@
                         <input type="date" id="assocStart" required />
                     </div>
                     <div class="form-group">
-                        <label>تاريخ الانتهاء (تلقائي)</label>
-                        <input type="date" id="assocEnd" readonly style="background:var(--gray-light);" />
+                        <label>تاريخ النهاية (قابل للتعديل)</label>
+                        <input type="date" id="assocEnd" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>عدد الأعضاء <span style="color:var(--danger);">*</span></label>
-                        <input type="number" id="assocMembersCount" placeholder="10" required min="1" />
+                        <label>عدد الأشهر (يحسب تلقائيًا)</label>
+                        <input type="number" id="assocMonths" placeholder="10" min="1" readonly style="background:var(--gray-light);" />
                     </div>
                     <div class="form-group">
                         <label>قيمة الدفع الشهري لكل عضو</label>
@@ -1393,7 +1342,7 @@
         </div>
     </div>
 
-    <!-- ===== MODAL: View Member ===== -->
+    <!-- ===== MODAL: Member Detail ===== -->
     <div class="modal-overlay" id="memberModal">
         <div class="modal" style="max-width:500px;">
             <div class="modal-header">
@@ -1401,6 +1350,27 @@
                 <button class="modal-close" onclick="closeModal('memberModal')"><i class="fas fa-times"></i></button>
             </div>
             <div id="memberDetailContent"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: Add Member ===== -->
+    <div class="modal-overlay" id="addMemberModal">
+        <div class="modal" style="max-width:400px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> إضافة عضو جديد</h2>
+                <button class="modal-close" onclick="closeModal('addMemberModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="addMemberForm" onsubmit="addMemberToAssoc(event)">
+                <input type="hidden" id="addMemberAssocId" />
+                <div class="form-group">
+                    <label>اسم العضو <span style="color:var(--danger);">*</span></label>
+                    <input type="text" id="addMemberName" placeholder="أدخل اسم العضو" required autofocus />
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> إضافة</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('addMemberModal')">إلغاء</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -1435,7 +1405,6 @@
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const parsed = JSON.parse(raw);
-                    // ensure all fields exist
                     if (!parsed.settings) parsed.settings = getDefaultData().settings;
                     if (!parsed.notifications) parsed.notifications = [];
                     if (!parsed.nextId) parsed.nextId = 1;
@@ -1540,7 +1509,6 @@
             const now = getCurrentMonth();
             const idx = assoc.months.findIndex(m => m.year === now.year && m.month === now.month);
             if (idx >= 0) return idx;
-            // find first upcoming or current
             for (let i = 0; i < assoc.months.length; i++) {
                 const m = assoc.months[i];
                 if (m.year > now.year || (m.year === now.year && m.month >= now.month)) return i;
@@ -1586,7 +1554,6 @@
         }
 
         function getCollectionOrder(assoc) {
-            // If custom order exists, use it; otherwise use member order
             if (assoc.collectionOrder && assoc.collectionOrder.length === assoc.members.length) {
                 return assoc.collectionOrder;
             }
@@ -1601,27 +1568,18 @@
             return assoc.members.find(m => m.id === memberId) || null;
         }
 
-        function getNextCollector(assoc) {
-            const order = getCollectionOrder(assoc);
-            const idx = (assoc.collectionIndex || 0) + 1;
-            if (idx >= order.length) return null;
-            const memberId = order[idx];
-            return assoc.members.find(m => m.id === memberId) || null;
-        }
-
         function advanceCollection(assoc) {
             const order = getCollectionOrder(assoc);
             const idx = (assoc.collectionIndex || 0) + 1;
             if (idx < order.length) {
                 assoc.collectionIndex = idx;
             } else {
-                assoc.collectionIndex = 0; // cycle or mark complete
+                assoc.collectionIndex = 0;
             }
             saveData();
         }
 
         function getAssocStatus(assoc) {
-            // 'active', 'completed', 'paused'
             if (assoc.status === 'paused') return 'paused';
             const allDone = assoc.months.every(m => m.status === 'closed' || m.status === 'completed');
             if (allDone && assoc.months.length > 0) return 'completed';
@@ -1634,7 +1592,7 @@
         function addNotification(type, message) {
             data.notifications.unshift({
                 id: genId(),
-                type: type, // 'success','warning','danger','info'
+                type: type,
                 message: message,
                 read: false,
                 date: new Date().toISOString()
@@ -1790,7 +1748,6 @@
                         totalUnpaidMembers += (a.members.length - paid);
                     }
                 }
-                // collector
                 const collector = getCurrentCollector(a);
                 if (collector) {
                     collectorName = collector.name;
@@ -1824,7 +1781,6 @@
                 </div>
             `).join('');
 
-            // Quick summary
             const alerts = [];
             if (totalUnpaidMembers > 0) alerts.push(`🔴 ${totalUnpaidMembers} عضو لم يدفعوا`);
             if (remaining > 0) alerts.push(`💰 متبقي ${formatCurrency(remaining)} للتحصيل`);
@@ -1832,10 +1788,7 @@
             if (alerts.length === 0) alerts.push('✅ كل شيء على ما يرام');
             document.getElementById('quickSummary').textContent = alerts.join(' | ');
 
-            // Collection Queue
             renderCollectionQueue();
-
-            // Associations Grid
             renderAssociations();
             renderNotificationsBadge();
         }
@@ -1936,7 +1889,7 @@
         }
 
         // ======================================================================
-        //  ASSOCIATION CRUD
+        //  ASSOCIATION CRUD (with auto months)
         // ======================================================================
         function openAddAssociation() {
             document.getElementById('assocModalTitle').textContent = 'جمعية جديدة';
@@ -1947,18 +1900,18 @@
             document.getElementById('membersNamesGroup').style.display = 'none';
             document.getElementById('membersNamesContainer').innerHTML = '';
             document.getElementById('assocNotes').value = '';
-            // set default date
             const today = todayStr();
             document.getElementById('assocStart').value = today;
             document.getElementById('assocStart').max = '2099-12-31';
-            // auto calc
+            document.getElementById('assocMonths').value = '';
+            document.getElementById('assocMonths').readOnly = true;
+            // bind events
             document.getElementById('assocTotal').addEventListener('input', calcMonthly);
-            document.getElementById('assocMonths').addEventListener('input', calcMonthly);
             document.getElementById('assocMembersCount').addEventListener('input', calcMonthly);
-            document.getElementById('assocStart').addEventListener('change', calcEndDate);
-            document.getElementById('assocMonths').addEventListener('change', calcEndDate);
+            document.getElementById('assocStart').addEventListener('change', calcEndFromStart);
+            document.getElementById('assocEnd').addEventListener('change', calcMonthsFromEnd);
             calcMonthly();
-            calcEndDate();
+            calcEndFromStart();
             openModal('assocModal');
         }
 
@@ -1968,18 +1921,19 @@
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
             const monthly = members > 0 && months > 0 ? Math.round(total / months / members) : 0;
             document.getElementById('assocMonthly').value = monthly > 0 ? formatCurrency(monthly) : '';
-            // generate member name fields
             const count = parseInt(document.getElementById('assocMembersCount').value) || 0;
             const container = document.getElementById('membersNamesContainer');
             const group = document.getElementById('membersNamesGroup');
             if (count > 0) {
                 group.style.display = 'block';
                 let html = '';
+                const existingInputs = container.querySelectorAll('.member-name-input');
                 for (let i = 0; i < count; i++) {
+                    const val = existingInputs[i] ? existingInputs[i].value : '';
                     html += `
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
                             <span style="font-weight:600;font-size:0.85rem;min-width:30px;">${i+1}.</span>
-                            <input type="text" class="member-name-input" placeholder="اسم العضو ${i+1}" required />
+                            <input type="text" class="member-name-input" placeholder="اسم العضو ${i+1}" value="${val}" required />
                         </div>
                     `;
                 }
@@ -1990,12 +1944,26 @@
             }
         }
 
-        function calcEndDate() {
+        function calcEndFromStart() {
             const start = document.getElementById('assocStart').value;
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
-            if (start) {
+            if (start && months > 0) {
                 const end = addMonths(start, months);
                 document.getElementById('assocEnd').value = end;
+            }
+        }
+
+        function calcMonthsFromEnd() {
+            const start = document.getElementById('assocStart').value;
+            const end = document.getElementById('assocEnd').value;
+            if (start && end) {
+                const months = monthsBetween(start, end);
+                if (months > 0) {
+                    document.getElementById('assocMonths').value = months;
+                    calcMonthly();
+                } else {
+                    showToast('تاريخ النهاية يجب أن يكون بعد البداية', 'error');
+                }
             }
         }
 
@@ -2003,20 +1971,20 @@
             e.preventDefault();
             const name = document.getElementById('assocName').value.trim();
             const totalValue = parseFloat(document.getElementById('assocTotal').value);
-            const months = parseInt(document.getElementById('assocMonths').value);
-            const startDate = document.getElementById('assocStart').value;
             const membersCount = parseInt(document.getElementById('assocMembersCount').value);
+            const startDate = document.getElementById('assocStart').value;
+            const endDate = document.getElementById('assocEnd').value;
+            const months = parseInt(document.getElementById('assocMonths').value);
             const notes = document.getElementById('assocNotes').value.trim();
             const editId = document.getElementById('editAssocId').value;
 
-            // validation
             if (!name) { showToast('يرجى إدخال اسم الجمعية', 'error'); return; }
             if (!totalValue || totalValue <= 0) { showToast('يرجى إدخال قيمة الجمعية الإجمالية', 'error'); return; }
-            if (!months || months < 1) { showToast('يرجى إدخال عدد الأشهر', 'error'); return; }
-            if (!startDate) { showToast('يرجى اختيار تاريخ البداية', 'error'); return; }
             if (!membersCount || membersCount < 1) { showToast('يرجى إدخال عدد الأعضاء', 'error'); return; }
+            if (!startDate) { showToast('يرجى اختيار تاريخ البداية', 'error'); return; }
+            if (!endDate) { showToast('يرجى تحديد تاريخ النهاية', 'error'); return; }
+            if (months < 1) { showToast('عدد الأشهر يجب أن يكون أكبر من صفر', 'error'); return; }
 
-            // member names
             const nameInputs = document.querySelectorAll('.member-name-input');
             const memberNames = [];
             nameInputs.forEach(inp => {
@@ -2029,16 +1997,10 @@
             }
 
             const monthlyPayment = Math.round(totalValue / months / membersCount);
-            const endDate = addMonths(startDate, months);
-
-            // Build month sequence
-            const monthSeq = getMonthSequence(startDate, months);
 
             if (editId) {
-                // Edit existing
                 const assoc = data.associations.find(a => a.id === parseInt(editId));
                 if (assoc) {
-                    // Preserve existing members and payments if possible
                     const oldMembers = assoc.members;
                     const newMembers = memberNames.map((name, i) => {
                         const old = oldMembers[i] || null;
@@ -2056,6 +2018,7 @@
                     assoc.totalMonths = months;
                     assoc.monthlyPayment = monthlyPayment;
                     assoc.members = newMembers;
+                    const monthSeq = getMonthSequence(startDate, months);
                     assoc.months = monthSeq.map(m => {
                         const existing = assoc.months.find(mm => mm.key === m.key);
                         return {
@@ -2077,13 +2040,13 @@
                     renderDashboard();
                 }
             } else {
-                // Create new
                 const members = memberNames.map(name => ({
                     id: genId(),
                     name: name,
                     payments: [],
                     notes: ''
                 }));
+                const monthSeq = getMonthSequence(startDate, months);
                 const association = {
                     id: genId(),
                     name: name,
@@ -2105,7 +2068,6 @@
                 showToast('تم إنشاء الجمعية بنجاح', 'success');
                 closeModal('assocModal');
                 renderDashboard();
-                // Add notification
                 addNotification('success', `تم إنشاء جمعية "${name}" بنجاح`);
             }
         }
@@ -2122,7 +2084,6 @@
             document.getElementById('assocEnd').value = assoc.endDate;
             document.getElementById('assocMembersCount').value = assoc.members.length;
             document.getElementById('assocNotes').value = assoc.notes || '';
-            // fill member names
             const container = document.getElementById('membersNamesContainer');
             const group = document.getElementById('membersNamesGroup');
             group.style.display = 'block';
@@ -2137,13 +2098,11 @@
             });
             container.innerHTML = html;
             calcMonthly();
-            calcEndDate();
-            // Re-bind events
+            // rebind events
             document.getElementById('assocTotal').addEventListener('input', calcMonthly);
-            document.getElementById('assocMonths').addEventListener('input', calcMonthly);
             document.getElementById('assocMembersCount').addEventListener('input', calcMonthly);
-            document.getElementById('assocStart').addEventListener('change', calcEndDate);
-            document.getElementById('assocMonths').addEventListener('change', calcEndDate);
+            document.getElementById('assocStart').addEventListener('change', calcEndFromStart);
+            document.getElementById('assocEnd').addEventListener('change', calcMonthsFromEnd);
             openModal('assocModal');
         }
 
@@ -2155,11 +2114,54 @@
                 saveData();
                 showToast(`تم حذف جمعية "${assoc.name}"`, 'warning');
                 renderDashboard();
-                // if detail page is open, go back
                 if (document.getElementById('page-detail').classList.contains('active')) {
                     navigateTo('dashboard');
                 }
             });
+        }
+
+        // ======================================================================
+        //  ADD MEMBER TO EXISTING ASSOCIATION
+        // ======================================================================
+        function openAddMemberModal(assocId) {
+            document.getElementById('addMemberAssocId').value = assocId;
+            document.getElementById('addMemberName').value = '';
+            openModal('addMemberModal');
+            setTimeout(() => document.getElementById('addMemberName').focus(), 100);
+        }
+
+        function addMemberToAssoc(e) {
+            e.preventDefault();
+            const assocId = parseInt(document.getElementById('addMemberAssocId').value);
+            const name = document.getElementById('addMemberName').value.trim();
+            if (!name) { showToast('يرجى إدخال اسم العضو', 'error'); return; }
+            const assoc = data.associations.find(a => a.id === assocId);
+            if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
+            // Check duplicate
+            if (assoc.members.some(m => m.name === name)) {
+                showToast('هذا الاسم موجود بالفعل', 'warning');
+                return;
+            }
+            const newMember = {
+                id: genId(),
+                name: name,
+                payments: [],
+                notes: ''
+            };
+            assoc.members.push(newMember);
+            // Update collection order
+            assoc.collectionOrder.push(newMember.id);
+            // Update month statuses for existing months (set to pending if needed)
+            assoc.months.forEach(m => {
+                if (m.status !== 'closed' && m.status !== 'completed') {
+                    m.status = 'pending';
+                }
+            });
+            saveData();
+            showToast(`تم إضافة العضو "${name}" بنجاح`, 'success');
+            closeModal('addMemberModal');
+            renderAssociationDetail(assoc);
+            renderDashboard();
         }
 
         // ======================================================================
@@ -2211,7 +2213,6 @@
                 </div>
             `;
 
-            // Month Tracker
             html += `
                 <div class="card mb-2">
                     <div class="card-header"><span><i class="fas fa-calendar"></i> الأشهر</span></div>
@@ -2227,20 +2228,21 @@
                                 else if (m.year > nowM.year || (m.year === nowM.year && m.month > nowM.month)) cls += ' upcoming';
                             }
                             if (st === 'partial') cls += ' partial';
-                            const label = m.label;
                             const icon = st === 'closed' || st === 'completed' ? '✅' : (st === 'current' ? '🟡' : (st === 'partial' ? '🟠' : '⚪'));
-                            return `<span class="${cls}" onclick="showMonthDetail(${assoc.id}, ${idx})">${icon} ${label}</span>`;
+                            return `<span class="${cls}" onclick="showMonthDetail(${assoc.id}, ${idx})">${icon} ${m.label}</span>`;
                         }).join('')}
                     </div>
                 </div>
             `;
 
-            // Members table
             html += `
                 <div class="card">
                     <div class="card-header">
                         <span><i class="fas fa-users"></i> الأعضاء</span>
-                        <span class="text-sm text-muted">${assoc.members.length} عضو</span>
+                        <div class="flex gap-1">
+                            <button class="btn btn-sm btn-success" onclick="openAddMemberModal(${assoc.id})"><i class="fas fa-user-plus"></i> إضافة عضو</button>
+                            <span class="text-sm text-muted">${assoc.members.length} عضو</span>
+                        </div>
                     </div>
                     <div class="table-wrap">
                         <table>
@@ -2295,7 +2297,6 @@
                 </div>
             `;
 
-            // Actions
             html += `
                 <div class="flex gap-1 mt-2" style="flex-wrap:wrap;">
                     <button class="btn btn-primary" onclick="openAddPaymentForAssoc(${assoc.id})"><i class="fas fa-plus"></i> تسجيل دفعة جديدة</button>
@@ -2353,7 +2354,6 @@
                 showToast('الشهر الحالي مغلق', 'warning');
                 return;
             }
-            // find first unpaid member
             const unpaid = assoc.members.filter(m => {
                 const p = getMemberPaymentForMonth(m, mk);
                 return !p || !p.paid;
@@ -2388,7 +2388,6 @@
                 return;
             }
 
-            // Check if already paid
             const existing = getMemberPaymentForMonth(member, monthKey);
             if (existing && existing.paid) {
                 showToast('هذا العضو دفع بالفعل لهذا الشهر', 'warning');
@@ -2396,7 +2395,6 @@
                 return;
             }
 
-            // Record payment
             const payment = {
                 month: monthKey,
                 paid: true,
@@ -2407,16 +2405,13 @@
                 note: note
             };
 
-            // Remove old if exists
             member.payments = member.payments.filter(p => p.month !== monthKey);
             member.payments.push(payment);
 
-            // Update month status
             const progress = getAssocMonthProgress(assoc, idx);
             if (progress.allPaid) {
                 month.status = 'completed';
                 addNotification('success', `✅ اكتمل تحصيل شهر ${month.label} في جمعية "${assoc.name}"`);
-                // Check if should advance collection
                 const collector = getCurrentCollector(assoc);
                 if (collector) {
                     addNotification('info', `🎯 ${collector.name} هو المستحق للقبض في جمعية "${assoc.name}"`);
@@ -2462,13 +2457,11 @@
         function doCloseMonth(assoc, idx) {
             const month = assoc.months[idx];
             month.status = 'closed';
-            // Advance collection
             const collector = getCurrentCollector(assoc);
             if (collector) {
                 addNotification('success', `🎯 ${collector.name} قبض ${formatCurrency(assoc.monthlyPayment * assoc.members.length)} في ${month.label}`);
             }
             advanceCollection(assoc);
-            // Check if all months done
             const allDone = assoc.months.every(m => m.status === 'closed' || m.status === 'completed');
             if (allDone) {
                 assoc.status = 'completed';
@@ -2591,7 +2584,6 @@
                         methodCount[p.method] = (methodCount[p.method] || 0) + 1;
                     });
                 });
-                // total required
                 a.months.forEach(m => {
                     if (m.status !== 'closed' && m.status !== 'completed') {
                         totalRequiredAll += a.members.length * a.monthlyPayment;
@@ -2729,7 +2721,6 @@
                     <button class="btn btn-outline" onclick="navigateTo('dashboard')">العودة للرئيسية</button>
                 </div>
             `;
-            // Save app name / currency on change
             document.getElementById('settingsAppName').addEventListener('change', function() {
                 data.settings.appName = this.value || 'جمعيتي';
                 saveData();
@@ -2813,17 +2804,9 @@
         }
 
         // ======================================================================
-        //  SEARCH & FILTERS (simple)
-        // ======================================================================
-        // Implemented inline in dashboard via search bar
-        // We'll add a search bar in the dashboard
-        // Actually, let's add it dynamically
-
-        // ======================================================================
         //  INIT
         // ======================================================================
         function init() {
-            // Set date
             const now = new Date();
             document.getElementById('navbarDate').textContent = now.toLocaleDateString('ar-EG', {
                 weekday: 'long',
@@ -2832,22 +2815,13 @@
                 day: 'numeric'
             });
 
-            // Apply theme
             applyTheme();
-
-            // Render
             renderDashboard();
 
-            // Check for demo data
             if (data.associations.length === 0) {
-                // Create demo data
                 createDemoData();
             }
 
-            // Auto-check notifications
-            checkPendingNotifications();
-
-            // Re-run every 60s
             setInterval(() => {
                 renderDashboard();
                 checkPendingNotifications();
@@ -2872,7 +2846,6 @@
             }));
 
             const monthSeq = getMonthSequence(startDate, months);
-            // Mark first 3 months as done, 4th as partial
             const monthsData = monthSeq.map((m, idx) => {
                 let status = 'pending';
                 if (idx < 3) status = 'closed';
@@ -2880,7 +2853,6 @@
                 return { ...m, status };
             });
 
-            // Add some payments for first 3 months
             members.forEach((m, mi) => {
                 for (let i = 0; i < 3; i++) {
                     const mk = monthSeq[i].key;
@@ -2894,7 +2866,6 @@
                         note: ''
                     });
                 }
-                // For 4th month, some paid
                 if (mi < 3) {
                     const mk = monthSeq[3].key;
                     m.payments.push({
@@ -2932,7 +2903,6 @@
         }
 
         function checkPendingNotifications() {
-            // Check for late payments, upcoming deadlines, etc.
             const now = getCurrentMonth();
             const mk = monthKey(now.year, now.month);
             data.associations.forEach(a => {
@@ -2946,7 +2916,6 @@
                             return !p || !p.paid;
                         });
                         if (unpaid.length > 0 && data.settings.notifications?.delay !== false) {
-                            // Check if we already have a notification for this
                             const hasNotif = data.notifications.some(n =>
                                 n.message.includes(a.name) && n.message.includes('لم يدفعوا') &&
                                 !n.read
@@ -2963,10 +2932,7 @@
             renderNotificationsBadge();
         }
 
-        // ======================================================================
-        //  START
-        // ======================================================================
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-</html>
+    </html>
