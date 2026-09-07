@@ -6,7 +6,7 @@
     <title>جمعيتي – إدارة الجمعيات المالية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        /* ===== CSS Variables & Reset ===== */
+        /* ===== نفس الـ CSS السابق ===== */
         :root {
             --bg-main: #f5f7fa;
             --bg-card: #ffffff;
@@ -55,1060 +55,177 @@
             --info-light: #1e3a5f;
             --orange-light: #7c2d12;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: var(--font);
-            background: var(--bg-main);
-            color: var(--text-primary);
-            transition: background var(--transition), color var(--transition);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        button {
-            cursor: pointer;
-            font-family: inherit;
-            border: none;
-            background: none;
-            color: inherit;
-        }
-        input,
-        select,
-        textarea {
-            font-family: inherit;
-            font-size: 1rem;
-            background: var(--bg-main);
-            border: 1.5px solid var(--border-color);
-            color: var(--text-primary);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            width: 100%;
-            transition: border var(--transition), box-shadow var(--transition);
-            outline: none;
-        }
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-        textarea {
-            resize: vertical;
-            min-height: 60px;
-        }
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-main);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--text-muted);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
-        }
-        .container {
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-        .flex {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .flex-wrap {
-            flex-wrap: wrap;
-        }
-        .flex-between {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .text-muted {
-            color: var(--text-muted);
-        }
-        .text-sm {
-            font-size: 0.85rem;
-        }
-        .text-xs {
-            font-size: 0.72rem;
-        }
-        .fw-bold {
-            font-weight: 700;
-        }
-        .mt-1 {
-            margin-top: 8px;
-        }
-        .mt-2 {
-            margin-top: 16px;
-        }
-        .mt-3 {
-            margin-top: 24px;
-        }
-        .mb-1 {
-            margin-bottom: 8px;
-        }
-        .mb-2 {
-            margin-bottom: 16px;
-        }
-        .gap-1 {
-            gap: 8px;
-        }
-        .gap-2 {
-            gap: 16px;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .w-full {
-            width: 100%;
-        }
-        .relative {
-            position: relative;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: background var(--transition), transform 0.15s, box-shadow var(--transition);
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .btn:active {
-            transform: scale(0.97);
-        }
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
-        }
-        .btn-success {
-            background: var(--success);
-            color: #fff;
-        }
-        .btn-success:hover {
-            background: #16a34a;
-            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
-        }
-        .btn-danger {
-            background: var(--danger);
-            color: #fff;
-        }
-        .btn-danger:hover {
-            background: #dc2626;
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
-        }
-        .btn-warning {
-            background: var(--warning);
-            color: #fff;
-        }
-        .btn-warning:hover {
-            background: #d97706;
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-        .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--primary-light);
-        }
-        .btn-ghost {
-            background: var(--gray-light);
-            color: var(--text-secondary);
-        }
-        .btn-ghost:hover {
-            background: var(--border-color);
-        }
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.82rem;
-            border-radius: var(--radius-xs);
-        }
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 20px 24px;
-            transition: background var(--transition), box-shadow var(--transition), transform 0.2s;
-            border: 1px solid var(--border-color);
-        }
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-        }
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 16px;
-            height: var(--header-height);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            backdrop-filter: blur(12px);
-            transition: background var(--transition), border var(--transition);
-        }
-        .navbar-brand {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .navbar-brand i {
-            font-size: 1.5rem;
-        }
-        .navbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .navbar-actions .btn-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--gray-light);
-            color: var(--text-secondary);
-            transition: background var(--transition), color var(--transition);
-            position: relative;
-        }
-        .navbar-actions .btn-icon:hover {
-            background: var(--border-color);
-        }
-        .badge-dot {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 18px;
-            height: 18px;
-            background: var(--danger);
-            color: #fff;
-            border-radius: 50%;
-            font-size: 0.6rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--bg-card);
-        }
-        .navbar-date {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-left: 8px;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 14px;
-            margin-bottom: 24px;
-        }
-        .stat-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 18px 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            transition: all var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            flex-shrink: 0;
-        }
-        .stat-icon.blue {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-        .stat-icon.green {
-            background: var(--success-light);
-            color: var(--success);
-        }
-        .stat-icon.yellow {
-            background: var(--warning-light);
-            color: var(--warning);
-        }
-        .stat-icon.red {
-            background: var(--danger-light);
-            color: var(--danger);
-        }
-        .stat-icon.orange {
-            background: var(--orange-light);
-            color: var(--orange);
-        }
-        .stat-icon.gray {
-            background: var(--gray-light);
-            color: var(--text-muted);
-        }
-        .stat-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .stat-info .number {
-            font-size: 1.6rem;
-            font-weight: 800;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-        .stat-info .label {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .section-title i {
-            color: var(--primary);
-        }
-        .table-wrap {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: var(--radius);
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 600px;
-        }
-        table th {
-            background: var(--gray-light);
-            color: var(--text-secondary);
-            font-weight: 600;
-            padding: 12px 14px;
-            text-align: right;
-            border-bottom: 2px solid var(--border-color);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
-        }
-        table tr:last-child td {
-            border-bottom: none;
-        }
-        table tr:hover td {
-            background: var(--gray-light);
-        }
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .badge-success {
-            background: var(--success-light);
-            color: #16a34a;
-        }
-        .badge-warning {
-            background: var(--warning-light);
-            color: #d97706;
-        }
-        .badge-danger {
-            background: var(--danger-light);
-            color: #dc2626;
-        }
-        .badge-info {
-            background: var(--info-light);
-            color: var(--info);
-        }
-        .badge-gray {
-            background: var(--gray-light);
-            color: var(--text-muted);
-        }
-        .badge-orange {
-            background: var(--orange-light);
-            color: var(--orange);
-        }
-        .progress-wrap {
-            background: var(--gray-light);
-            border-radius: 999px;
-            height: 8px;
-            overflow: hidden;
-            width: 100%;
-            margin-top: 6px;
-        }
-        .progress-bar {
-            height: 100%;
-            border-radius: 999px;
-            background: var(--primary);
-            transition: width 0.5s ease;
-        }
-        .progress-bar.green {
-            background: var(--success);
-        }
-        .progress-bar.yellow {
-            background: var(--warning);
-        }
-        .progress-bar.red {
-            background: var(--danger);
-        }
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(4px);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            max-width: 560px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 28px 32px;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
-            transform: scale(0.95) translateY(10px);
-            transition: transform 0.3s ease;
-            border: 1px solid var(--border-color);
-        }
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-        }
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .modal-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-        .modal-close {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--gray-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: background var(--transition);
-        }
-        .modal-close:hover {
-            background: var(--border-color);
-        }
-        .modal .form-group {
-            margin-bottom: 16px;
-        }
-        .modal .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-            color: var(--text-secondary);
-        }
-        .modal .form-group .hint {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-        .modal .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        .modal-actions .btn {
-            flex: 1;
-            min-width: 100px;
-        }
-        .toast-container {
-            position: fixed;
-            top: 80px;
-            left: 16px;
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 380px;
-            width: 100%;
-        }
-        .toast {
-            background: var(--bg-card);
-            border-radius: var(--radius-sm);
-            padding: 14px 18px;
-            box-shadow: var(--shadow-hover);
-            border-right: 4px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideIn 0.35s ease;
-            border: 1px solid var(--border-color);
-        }
-        .toast.success {
-            border-right-color: var(--success);
-        }
-        .toast.error {
-            border-right-color: var(--danger);
-        }
-        .toast.warning {
-            border-right-color: var(--warning);
-        }
-        .toast.info {
-            border-right-color: var(--info);
-        }
-        .toast i {
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-        .toast .toast-msg {
-            flex: 1;
-            font-size: 0.9rem;
-        }
-        .toast .toast-close {
-            cursor: pointer;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            padding: 0 4px;
-        }
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        .assoc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 18px;
-        }
-        .assoc-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 20px 22px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-            transition: all var(--transition);
-            cursor: pointer;
-        }
-        .assoc-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-        .assoc-card .name {
-            font-size: 1.15rem;
-            font-weight: 700;
-        }
-        .assoc-card .meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 16px;
-            margin-top: 8px;
-            font-size: 0.82rem;
-            color: var(--text-secondary);
-        }
-        .assoc-card .meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .assoc-card .actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        @media (max-width: 992px) {
-            .grid-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .grid-3 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .grid-3 {
-                grid-template-columns: 1fr 1fr;
-            }
-            .grid-4 {
-                grid-template-columns: 1fr 1fr;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .modal {
-                padding: 20px 16px;
-                margin: 10px;
-            }
-            .modal .form-row {
-                grid-template-columns: 1fr;
-            }
-            .navbar-brand {
-                font-size: 1.05rem;
-            }
-            .navbar-date {
-                font-size: 0.7rem;
-            }
-            .assoc-grid {
-                grid-template-columns: 1fr;
-            }
-            .stat-card {
-                padding: 14px 16px;
-            }
-            .stat-info .number {
-                font-size: 1.3rem;
-            }
-            .stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.1rem;
-            }
-            .toast-container {
-                left: 8px;
-                right: 8px;
-                max-width: 100%;
-                top: 72px;
-            }
-            .card {
-                padding: 16px;
-            }
-            .section-title {
-                font-size: 1.05rem;
-            }
-            .modal-actions .btn {
-                flex: 1 1 100%;
-            }
-            table {
-                font-size: 0.8rem;
-                min-width: 480px;
-            }
-            table th,
-            table td {
-                padding: 8px 10px;
-            }
-            .navbar-actions .btn-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 0.95rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            .grid-4 {
-                grid-template-columns: 1fr 1fr;
-            }
-            .stat-card {
-                padding: 12px;
-                gap: 10px;
-            }
-            .stat-info .number {
-                font-size: 1.1rem;
-            }
-            .stat-info .label {
-                font-size: 0.65rem;
-            }
-            .stat-icon {
-                width: 34px;
-                height: 34px;
-                font-size: 0.9rem;
-            }
-            .container {
-                padding: 0 10px;
-            }
-            .btn {
-                padding: 8px 14px;
-                font-size: 0.82rem;
-            }
-            .btn-sm {
-                padding: 4px 10px;
-                font-size: 0.7rem;
-            }
-            .navbar {
-                padding: 0 10px;
-                height: 60px;
-            }
-            .navbar-brand {
-                font-size: 0.95rem;
-            }
-        }
-        .page {
-            display: none;
-            animation: fadeUp 0.3s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .queue-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            background: var(--gray-light);
-            margin-bottom: 6px;
-            border-right: 4px solid var(--text-muted);
-        }
-        .queue-item.active {
-            border-right-color: var(--success);
-            background: var(--success-light);
-        }
-        .queue-item.done {
-            border-right-color: var(--gray);
-            opacity: 0.6;
-        }
-        .queue-item.upcoming {
-            border-right-color: var(--info);
-        }
-        .queue-item .q-num {
-            font-weight: 700;
-            color: var(--text-muted);
-            width: 28px;
-            font-size: 0.85rem;
-        }
-        .queue-item .q-name {
-            flex: 1;
-            font-weight: 600;
-        }
-        .queue-item .q-status {
-            font-size: 0.75rem;
-        }
-        .month-tracker {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 12px 0;
-        }
-        .month-chip {
-            padding: 6px 16px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: var(--gray-light);
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: all var(--transition);
-        }
-        .month-chip.done {
-            background: var(--success-light);
-            color: #16a34a;
-            border-color: var(--success);
-        }
-        .month-chip.current {
-            background: var(--primary-light);
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-        .month-chip.upcoming {
-            opacity: 0.5;
-        }
-        .month-chip.partial {
-            background: var(--warning-light);
-            color: #d97706;
-            border-color: var(--warning);
-        }
-        .report-stat {
-            text-align: center;
-            padding: 16px;
-            background: var(--gray-light);
-            border-radius: var(--radius-sm);
-        }
-        .report-stat .num {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-        .report-stat .lbl {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-        .setting-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .setting-item:last-child {
-            border-bottom: none;
-        }
-        .setting-item .left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .setting-item .left i {
-            width: 28px;
-            color: var(--text-muted);
-        }
-        .toggle {
-            width: 44px;
-            height: 24px;
-            background: var(--border-color);
-            border-radius: 999px;
-            position: relative;
-            cursor: pointer;
-            transition: background var(--transition);
-            flex-shrink: 0;
-        }
-        .toggle.active {
-            background: var(--primary);
-        }
-        .toggle::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            transition: transform var(--transition);
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-        }
-        .toggle.active::after {
-            transform: translateX(-20px);
-        }
-        .search-bar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .search-bar input {
-            flex: 1;
-            min-width: 180px;
-        }
-        .search-bar select {
-            min-width: 140px;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-        }
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            opacity: 0.4;
-        }
-        .empty-state h3 {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-        }
-        .divider {
-            border: none;
-            border-top: 1px solid var(--border-color);
-            margin: 20px 0;
-        }
-        .inline-flex {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .gap-4 {
-            gap: 4px;
-        }
-        .flex-1 {
-            flex: 1;
-        }
-        .text-ellipsis {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 140px;
-        }
-        .detail-header {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-        }
-        .detail-header .name {
-            font-size: 1.6rem;
-            font-weight: 800;
-        }
-        .detail-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px 28px;
-            margin-top: 8px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        .detail-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .detail-meta i {
-            color: var(--text-muted);
-            width: 18px;
-        }
-        @media (max-width: 640px) {
-            .table-wrap table {
-                min-width: 100%;
-            }
-            .table-wrap table thead {
-                display: none;
-            }
-            .table-wrap table tbody tr {
-                display: block;
-                padding: 12px 0;
-                border-bottom: 2px solid var(--border-color);
-            }
-            .table-wrap table tbody tr:last-child {
-                border-bottom: none;
-            }
-            .table-wrap table tbody td {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 6px 10px;
-                border-bottom: none;
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-            .table-wrap table tbody td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                font-size: 0.75rem;
-                color: var(--text-muted);
-                flex-shrink: 0;
-            }
-            .table-wrap table tbody td:last-child {
-                border-bottom: none;
-            }
-            .table-wrap table tbody td .badge,
-            .table-wrap table tbody td .btn {
-                font-size: 0.75rem;
-            }
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:var(--font); background:var(--bg-main); color:var(--text-primary); transition:background var(--transition), color var(--transition); min-height:100vh; line-height:1.6; }
+        a { text-decoration:none; color:inherit; }
+        button { cursor:pointer; font-family:inherit; border:none; background:none; color:inherit; }
+        input, select, textarea { font-family:inherit; font-size:1rem; background:var(--bg-main); border:1.5px solid var(--border-color); color:var(--text-primary); border-radius:var(--radius-sm); padding:10px 14px; width:100%; transition:border var(--transition), box-shadow var(--transition); outline:none; }
+        input:focus, select:focus, textarea:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(37,99,235,0.15); }
+        textarea { resize:vertical; min-height:60px; }
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background:var(--text-muted); border-radius:10px; }
+        ::-webkit-scrollbar-thumb:hover { background:var(--text-secondary); }
+        .container { max-width:1320px; margin:0 auto; padding:0 16px; }
+        .flex { display:flex; align-items:center; gap:12px; }
+        .flex-wrap { flex-wrap:wrap; }
+        .flex-between { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+        .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+        .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+        .text-center { text-align:center; }
+        .text-muted { color:var(--text-muted); }
+        .text-sm { font-size:0.85rem; }
+        .text-xs { font-size:0.72rem; }
+        .fw-bold { font-weight:700; }
+        .mt-1 { margin-top:8px; }
+        .mt-2 { margin-top:16px; }
+        .mt-3 { margin-top:24px; }
+        .mb-1 { margin-bottom:8px; }
+        .mb-2 { margin-bottom:16px; }
+        .gap-1 { gap:8px; }
+        .gap-2 { gap:16px; }
+        .hidden { display:none !important; }
+        .w-full { width:100%; }
+        .relative { position:relative; }
+        .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:var(--radius-sm); font-weight:600; font-size:0.95rem; transition:background var(--transition), transform 0.15s, box-shadow var(--transition); border:none; cursor:pointer; white-space:nowrap; }
+        .btn:active { transform:scale(0.97); }
+        .btn-primary { background:var(--primary); color:#fff; }
+        .btn-primary:hover { background:var(--primary-dark); box-shadow:0 4px 16px rgba(37,99,235,0.3); }
+        .btn-success { background:var(--success); color:#fff; }
+        .btn-success:hover { background:#16a34a; box-shadow:0 4px 16px rgba(34,197,94,0.3); }
+        .btn-danger { background:var(--danger); color:#fff; }
+        .btn-danger:hover { background:#dc2626; box-shadow:0 4px 16px rgba(239,68,68,0.3); }
+        .btn-warning { background:var(--warning); color:#fff; }
+        .btn-warning:hover { background:#d97706; box-shadow:0 4px 16px rgba(245,158,11,0.3); }
+        .btn-outline { background:transparent; border:1.5px solid var(--border-color); color:var(--text-secondary); }
+        .btn-outline:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-light); }
+        .btn-ghost { background:var(--gray-light); color:var(--text-secondary); }
+        .btn-ghost:hover { background:var(--border-color); }
+        .btn-sm { padding:6px 14px; font-size:0.82rem; border-radius:var(--radius-xs); }
+        .btn-icon { width:40px; height:40px; padding:0; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:1.1rem; }
+        .card { background:var(--bg-card); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 24px; transition:background var(--transition), box-shadow var(--transition), transform 0.2s; border:1px solid var(--border-color); }
+        .card:hover { box-shadow:var(--shadow-hover); }
+        .card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; font-weight:600; font-size:1.1rem; }
+        .navbar { position:sticky; top:0; z-index:100; background:var(--bg-card); border-bottom:1px solid var(--border-color); padding:0 16px; height:var(--header-height); display:flex; align-items:center; justify-content:space-between; backdrop-filter:blur(12px); transition:background var(--transition), border var(--transition); }
+        .navbar-brand { font-size:1.3rem; font-weight:800; color:var(--primary); display:flex; align-items:center; gap:8px; }
+        .navbar-brand i { font-size:1.5rem; }
+        .navbar-actions { display:flex; align-items:center; gap:6px; }
+        .navbar-actions .btn-icon { width:40px; height:40px; border-radius:50%; background:var(--gray-light); color:var(--text-secondary); transition:background var(--transition), color var(--transition); position:relative; }
+        .navbar-actions .btn-icon:hover { background:var(--border-color); }
+        .badge-dot { position:absolute; top:2px; right:2px; width:18px; height:18px; background:var(--danger); color:#fff; border-radius:50%; font-size:0.6rem; font-weight:700; display:flex; align-items:center; justify-content:center; border:2px solid var(--bg-card); }
+        .navbar-date { font-size:0.85rem; color:var(--text-muted); margin-left:8px; }
+        .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:14px; margin-bottom:24px; }
+        .stat-card { background:var(--bg-card); border-radius:var(--radius); padding:18px 20px; box-shadow:var(--shadow); border:1px solid var(--border-color); transition:all var(--transition); display:flex; align-items:center; gap:14px; }
+        .stat-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-hover); }
+        .stat-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+        .stat-icon.blue { background:var(--primary-light); color:var(--primary); }
+        .stat-icon.green { background:var(--success-light); color:var(--success); }
+        .stat-icon.yellow { background:var(--warning-light); color:var(--warning); }
+        .stat-icon.red { background:var(--danger-light); color:var(--danger); }
+        .stat-icon.orange { background:var(--orange-light); color:var(--orange); }
+        .stat-icon.gray { background:var(--gray-light); color:var(--text-muted); }
+        .stat-info { flex:1; min-width:0; }
+        .stat-info .number { font-size:1.6rem; font-weight:800; line-height:1.2; letter-spacing:-0.5px; }
+        .stat-info .label { font-size:0.78rem; color:var(--text-muted); font-weight:500; }
+        .section-title { font-size:1.25rem; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+        .section-title i { color:var(--primary); }
+        .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:var(--radius); border:1px solid var(--border-color); background:var(--bg-card); }
+        table { width:100%; border-collapse:collapse; font-size:0.9rem; min-width:600px; }
+        table th { background:var(--gray-light); color:var(--text-secondary); font-weight:600; padding:12px 14px; text-align:right; border-bottom:2px solid var(--border-color); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.3px; }
+        table td { padding:12px 14px; border-bottom:1px solid var(--border-color); vertical-align:middle; }
+        table tr:last-child td { border-bottom:none; }
+        table tr:hover td { background:var(--gray-light); }
+        .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:600; white-space:nowrap; }
+        .badge-success { background:var(--success-light); color:#16a34a; }
+        .badge-warning { background:var(--warning-light); color:#d97706; }
+        .badge-danger { background:var(--danger-light); color:#dc2626; }
+        .badge-info { background:var(--info-light); color:var(--info); }
+        .badge-gray { background:var(--gray-light); color:var(--text-muted); }
+        .badge-orange { background:var(--orange-light); color:var(--orange); }
+        .progress-wrap { background:var(--gray-light); border-radius:999px; height:8px; overflow:hidden; width:100%; margin-top:6px; }
+        .progress-bar { height:100%; border-radius:999px; background:var(--primary); transition:width 0.5s ease; }
+        .progress-bar.green { background:var(--success); }
+        .progress-bar.yellow { background:var(--warning); }
+        .progress-bar.red { background:var(--danger); }
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); backdrop-filter:blur(4px); z-index:999; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .modal-overlay.active { opacity:1; pointer-events:auto; }
+        .modal { background:var(--bg-card); border-radius:var(--radius); max-width:560px; width:100%; max-height:90vh; overflow-y:auto; padding:28px 32px; box-shadow:0 24px 64px rgba(0,0,0,0.2); transform:scale(0.95) translateY(10px); transition:transform 0.3s ease; border:1px solid var(--border-color); }
+        .modal-overlay.active .modal { transform:scale(1) translateY(0); }
+        .modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+        .modal-header h2 { font-size:1.3rem; font-weight:700; }
+        .modal-close { width:36px; height:36px; border-radius:50%; background:var(--gray-light); display:flex; align-items:center; justify-content:center; font-size:1.2rem; transition:background var(--transition); }
+        .modal-close:hover { background:var(--border-color); }
+        .modal .form-group { margin-bottom:16px; }
+        .modal .form-group label { display:block; font-weight:600; font-size:0.9rem; margin-bottom:4px; color:var(--text-secondary); }
+        .modal .form-group .hint { font-size:0.75rem; color:var(--text-muted); margin-top:2px; }
+        .modal .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .modal-actions { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+        .modal-actions .btn { flex:1; min-width:100px; }
+        .toast-container { position:fixed; top:80px; left:16px; z-index:2000; display:flex; flex-direction:column; gap:10px; max-width:380px; width:100%; }
+        .toast { background:var(--bg-card); border-radius:var(--radius-sm); padding:14px 18px; box-shadow:var(--shadow-hover); border-right:4px solid var(--primary); display:flex; align-items:center; gap:12px; animation:slideIn 0.35s ease; border:1px solid var(--border-color); }
+        .toast.success { border-right-color:var(--success); }
+        .toast.error { border-right-color:var(--danger); }
+        .toast.warning { border-right-color:var(--warning); }
+        .toast.info { border-right-color:var(--info); }
+        .toast i { font-size:1.3rem; flex-shrink:0; }
+        .toast .toast-msg { flex:1; font-size:0.9rem; }
+        .toast .toast-close { cursor:pointer; font-size:1.1rem; color:var(--text-muted); padding:0 4px; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
+        .assoc-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:18px; }
+        .assoc-card { background:var(--bg-card); border-radius:var(--radius); padding:20px 22px; border:1px solid var(--border-color); box-shadow:var(--shadow); transition:all var(--transition); cursor:pointer; }
+        .assoc-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-hover); }
+        .assoc-card .name { font-size:1.15rem; font-weight:700; }
+        .assoc-card .meta { display:flex; flex-wrap:wrap; gap:10px 16px; margin-top:8px; font-size:0.82rem; color:var(--text-secondary); }
+        .assoc-card .meta span { display:flex; align-items:center; gap:4px; }
+        .assoc-card .actions { display:flex; gap:6px; margin-top:12px; flex-wrap:wrap; }
+        @media (max-width:992px) { .grid-4 { grid-template-columns:repeat(2,1fr); } .grid-3 { grid-template-columns:repeat(2,1fr); } }
+        @media (max-width:768px) { .grid-2 { grid-template-columns:1fr; } .grid-3 { grid-template-columns:1fr 1fr; } .grid-4 { grid-template-columns:1fr 1fr; } .stats-grid { grid-template-columns:repeat(2,1fr); } .modal { padding:20px 16px; margin:10px; } .modal .form-row { grid-template-columns:1fr; } .navbar-brand { font-size:1.05rem; } .navbar-date { font-size:0.7rem; } .assoc-grid { grid-template-columns:1fr; } .stat-card { padding:14px 16px; } .stat-info .number { font-size:1.3rem; } .stat-icon { width:40px; height:40px; font-size:1.1rem; } .toast-container { left:8px; right:8px; max-width:100%; top:72px; } .card { padding:16px; } .section-title { font-size:1.05rem; } .modal-actions .btn { flex:1 1 100%; } table { font-size:0.8rem; min-width:480px; } table th, table td { padding:8px 10px; } .navbar-actions .btn-icon { width:36px; height:36px; font-size:0.95rem; } }
+        @media (max-width:480px) { .stats-grid { grid-template-columns:1fr 1fr; gap:10px; } .grid-3 { grid-template-columns:1fr; } .grid-4 { grid-template-columns:1fr 1fr; } .stat-card { padding:12px; gap:10px; } .stat-info .number { font-size:1.1rem; } .stat-info .label { font-size:0.65rem; } .stat-icon { width:34px; height:34px; font-size:0.9rem; } .container { padding:0 10px; } .btn { padding:8px 14px; font-size:0.82rem; } .btn-sm { padding:4px 10px; font-size:0.7rem; } .navbar { padding:0 10px; height:60px; } .navbar-brand { font-size:0.95rem; } }
+        .page { display:none; animation:fadeUp 0.3s ease; }
+        .page.active { display:block; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+        .queue-item { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:var(--radius-sm); background:var(--gray-light); margin-bottom:6px; border-right:4px solid var(--text-muted); }
+        .queue-item.active { border-right-color:var(--success); background:var(--success-light); }
+        .queue-item.done { border-right-color:var(--gray); opacity:0.6; }
+        .queue-item.upcoming { border-right-color:var(--info); }
+        .queue-item .q-num { font-weight:700; color:var(--text-muted); width:28px; font-size:0.85rem; }
+        .queue-item .q-name { flex:1; font-weight:600; }
+        .queue-item .q-status { font-size:0.75rem; }
+        .month-tracker { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+        .month-chip { padding:6px 16px; border-radius:999px; font-size:0.8rem; font-weight:600; background:var(--gray-light); color:var(--text-muted); border:1px solid var(--border-color); cursor:pointer; transition:all var(--transition); }
+        .month-chip.done { background:var(--success-light); color:#16a34a; border-color:var(--success); }
+        .month-chip.current { background:var(--primary-light); color:var(--primary); border-color:var(--primary); }
+        .month-chip.upcoming { opacity:0.5; }
+        .month-chip.partial { background:var(--warning-light); color:#d97706; border-color:var(--warning); }
+        .report-stat { text-align:center; padding:16px; background:var(--gray-light); border-radius:var(--radius-sm); }
+        .report-stat .num { font-size:1.8rem; font-weight:800; }
+        .report-stat .lbl { font-size:0.8rem; color:var(--text-muted); }
+        .setting-item { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border-color); gap:12px; flex-wrap:wrap; }
+        .setting-item:last-child { border-bottom:none; }
+        .setting-item .left { display:flex; align-items:center; gap:12px; }
+        .setting-item .left i { width:28px; color:var(--text-muted); }
+        .toggle { width:44px; height:24px; background:var(--border-color); border-radius:999px; position:relative; cursor:pointer; transition:background var(--transition); flex-shrink:0; }
+        .toggle.active { background:var(--primary); }
+        .toggle::after { content:''; position:absolute; top:2px; right:2px; width:20px; height:20px; background:#fff; border-radius:50%; transition:transform var(--transition); box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+        .toggle.active::after { transform:translateX(-20px); }
+        .search-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+        .search-bar input { flex:1; min-width:180px; }
+        .search-bar select { min-width:140px; }
+        .empty-state { text-align:center; padding:40px 20px; color:var(--text-muted); }
+        .empty-state i { font-size:3rem; margin-bottom:12px; opacity:0.4; }
+        .empty-state h3 { font-size:1.1rem; color:var(--text-secondary); }
+        .divider { border:none; border-top:1px solid var(--border-color); margin:20px 0; }
+        .inline-flex { display:inline-flex; align-items:center; gap:6px; }
+        .gap-4 { gap:4px; }
+        .flex-1 { flex:1; }
+        .text-ellipsis { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px; }
+        .detail-header { background:var(--bg-card); border-radius:var(--radius); padding:20px 24px; margin-bottom:20px; border:1px solid var(--border-color); box-shadow:var(--shadow); }
+        .detail-header .name { font-size:1.6rem; font-weight:800; }
+        .detail-meta { display:flex; flex-wrap:wrap; gap:16px 28px; margin-top:8px; font-size:0.9rem; color:var(--text-secondary); }
+        .detail-meta span { display:flex; align-items:center; gap:5px; }
+        .detail-meta i { color:var(--text-muted); width:18px; }
+        @media (max-width:640px) { .table-wrap table { min-width:100%; } .table-wrap table thead { display:none; } .table-wrap table tbody tr { display:block; padding:12px 0; border-bottom:2px solid var(--border-color); } .table-wrap table tbody tr:last-child { border-bottom:none; } .table-wrap table tbody td { display:flex; align-items:center; justify-content:space-between; padding:6px 10px; border-bottom:none; gap:8px; flex-wrap:wrap; } .table-wrap table tbody td::before { content:attr(data-label); font-weight:600; font-size:0.75rem; color:var(--text-muted); flex-shrink:0; } .table-wrap table tbody td:last-child { border-bottom:none; } .table-wrap table tbody td .badge, .table-wrap table tbody td .btn { font-size:0.75rem; } }
     </style>
 </head>
 <body>
@@ -1228,7 +345,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>قيمة الجمعية الإجمالية <span style="color:var(--danger);">*</span></label>
+                        <label>إجمالي قيمة الجمعية <span style="color:var(--danger);">*</span></label>
                         <input type="number" id="assocTotal" placeholder="10000" required min="1" />
                     </div>
                     <div class="form-group">
@@ -1248,12 +365,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>عدد الأشهر (يحسب تلقائيًا)</label>
+                        <label>عدد الأشهر (يحسب تلقائياً)</label>
                         <input type="number" id="assocMonths" placeholder="10" min="1" readonly style="background:var(--gray-light);" />
                     </div>
                     <div class="form-group">
-                        <label>قيمة الدفع الشهري لكل عضو</label>
-                        <input type="text" id="assocMonthly" readonly style="background:var(--gray-light);" />
+                        <label>قيمة الدفع الشهري لكل عضو (قابل للتعديل)</label>
+                        <input type="number" id="assocMonthly" placeholder="100" min="1" step="any" />
                     </div>
                 </div>
                 <div class="form-group" id="membersNamesGroup" style="display:none;">
@@ -1283,10 +400,13 @@
             <form id="paymentForm" onsubmit="recordPayment(event)">
                 <input type="hidden" id="payAssocId" />
                 <input type="hidden" id="payMemberId" />
-                <input type="hidden" id="payMonth" />
                 <div class="form-group">
                     <label>العضو</label>
                     <input type="text" id="payMemberName" readonly style="background:var(--gray-light);" />
+                </div>
+                <div class="form-group">
+                    <label>الشهر <span style="color:var(--danger);">*</span></label>
+                    <select id="payMonthSelect" required></select>
                 </div>
                 <div class="form-group">
                     <label>المبلغ المطلوب</label>
@@ -1387,11 +507,7 @@
                     appName: 'جمعيتي',
                     currency: 'جنيه مصري',
                     darkMode: false,
-                    notifications: {
-                        delay: true,
-                        completion: true,
-                        preCollection: true
-                    }
+                    notifications: { delay: true, completion: true, preCollection: true }
                 },
                 notifications: [],
                 nextId: 1
@@ -1424,7 +540,7 @@
         function genId() { return data.nextId++; }
 
         // ======================================================================
-        //  HELPERS
+        //  HELPERS (نفس السابق)
         // ======================================================================
         function formatCurrency(amount) {
             return Number(amount).toLocaleString('ar-EG') + ' ' + data.settings.currency;
@@ -1434,12 +550,6 @@
             if (!dateStr) return '—';
             const d = new Date(dateStr + 'T00:00:00');
             return d.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
-        }
-
-        function formatDateShort(dateStr) {
-            if (!dateStr) return '—';
-            const d = new Date(dateStr + 'T00:00:00');
-            return d.toLocaleDateString('ar-EG', { month: 'short', year: 'numeric' });
         }
 
         function todayStr() {
@@ -1462,18 +572,9 @@
             return { year: parseInt(parts[0]), month: parseInt(parts[1]) };
         }
 
-        function isSameMonth(a, b) {
-            return a.year === b.year && a.month === b.month;
-        }
-
         function getCurrentMonth() {
             const d = new Date();
             return { year: d.getFullYear(), month: d.getMonth() + 1 };
-        }
-
-        function getMonthKeyFromDate(dateStr) {
-            const d = new Date(dateStr + 'T00:00:00');
-            return monthKey(d.getFullYear(), d.getMonth() + 1);
         }
 
         function addMonths(dateStr, count) {
@@ -1505,25 +606,8 @@
             return assoc.months.findIndex(m => m.key === monthKey);
         }
 
-        function getCurrentAssocMonth(assoc) {
-            const now = getCurrentMonth();
-            const idx = assoc.months.findIndex(m => m.year === now.year && m.month === now.month);
-            if (idx >= 0) return idx;
-            for (let i = 0; i < assoc.months.length; i++) {
-                const m = assoc.months[i];
-                if (m.year > now.year || (m.year === now.year && m.month >= now.month)) return i;
-            }
-            return assoc.months.length - 1;
-        }
-
-        function getMonthStatus(assoc, idx) {
-            if (idx < 0 || idx >= assoc.months.length) return 'upcoming';
-            return assoc.months[idx].status || 'pending';
-        }
-
         function getMemberPaymentForMonth(member, monthKey) {
-            const record = member.payments.find(p => p.month === monthKey);
-            return record || null;
+            return member.payments.find(p => p.month === monthKey) || null;
         }
 
         function getAssocTotalCollected(assoc, monthKey) {
@@ -1590,13 +674,7 @@
         //  NOTIFICATIONS
         // ======================================================================
         function addNotification(type, message) {
-            data.notifications.unshift({
-                id: genId(),
-                type: type,
-                message: message,
-                read: false,
-                date: new Date().toISOString()
-            });
+            data.notifications.unshift({ id: genId(), type, message, read: false, date: new Date().toISOString() });
             if (data.notifications.length > 100) data.notifications = data.notifications.slice(0, 100);
             saveData();
             renderNotificationsBadge();
@@ -1611,10 +689,6 @@
             } else {
                 badge.style.display = 'none';
             }
-        }
-
-        function getNotifications() {
-            return data.notifications;
         }
 
         function markAllNotificationsRead() {
@@ -1636,12 +710,8 @@
         // ======================================================================
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
-            const icons = {
-                success: 'fas fa-check-circle',
-                error: 'fas fa-exclamation-circle',
-                warning: 'fas fa-triangle-exclamation',
-                info: 'fas fa-info-circle'
-            };
+            const icons = { success: 'fas fa-check-circle', error: 'fas fa-exclamation-circle', warning: 'fas fa-triangle-exclamation',
+                info: 'fas fa-info-circle' };
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.innerHTML = `
@@ -1650,41 +720,30 @@
                 <span class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></span>
             `;
             container.appendChild(toast);
-            setTimeout(() => {
-                if (toast.parentElement) toast.remove();
-            }, 5000);
+            setTimeout(() => { if (toast.parentElement) toast.remove(); }, 5000);
         }
 
         // ======================================================================
-        //  MODALS
+        //  MODALS & CONFIRM
         // ======================================================================
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        function openModal(id) { document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden'; }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-            document.body.style.overflow = '';
-        }
+        function closeModal(id) { document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = ''; }
 
-        // ======================================================================
-        //  CONFIRM
-        // ======================================================================
         function confirmAction(message, callback) {
             document.getElementById('confirmMessage').textContent = message;
             const btn = document.getElementById('confirmBtn');
             const newBtn = btn.cloneNode(true);
             btn.parentNode.replaceChild(newBtn, btn);
-            newBtn.addEventListener('click', function() {
-                closeModal('confirmModal');
-                callback();
-            });
+            newBtn.addEventListener('click', function() { closeModal('confirmModal');
+                callback(); });
             openModal('confirmModal');
         }
 
         // ======================================================================
-        //  NAVIGATION
+        //  NAVIGATION & THEME
         // ======================================================================
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1697,12 +756,8 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ======================================================================
-        //  THEME
-        // ======================================================================
         function toggleTheme() {
-            const dark = !data.settings.darkMode;
-            data.settings.darkMode = dark;
+            data.settings.darkMode = !data.settings.darkMode;
             saveData();
             applyTheme();
         }
@@ -1718,7 +773,7 @@
         }
 
         // ======================================================================
-        //  RENDER: DASHBOARD
+        //  RENDER DASHBOARD
         // ======================================================================
         function renderDashboard() {
             const assocs = data.associations;
@@ -1756,8 +811,6 @@
             });
 
             const remaining = totalRequired - totalCollected;
-            const percent = totalRequired > 0 ? Math.round((totalCollected / totalRequired) * 100) : 0;
-
             const stats = [
                 { icon: 'fas fa-building', color: 'blue', number: totalAssocs, label: 'الجمعيات النشطة' },
                 { icon: 'fas fa-user', color: 'green', number: totalMembers, label: 'إجمالي الأعضاء' },
@@ -1850,9 +903,7 @@
                 const mk = monthKey(now.year, now.month);
                 const idx = getAssocMonthIndex(a, mk);
                 let progress = { paid: 0, total: 0, percent: 0 };
-                if (idx >= 0) {
-                    progress = getAssocMonthProgress(a, idx);
-                }
+                if (idx >= 0) progress = getAssocMonthProgress(a, idx);
                 const collector = getCurrentCollector(a);
                 return `
                     <div class="assoc-card" onclick="openAssociationDetail(${a.id})">
@@ -1889,7 +940,7 @@
         }
 
         // ======================================================================
-        //  ASSOCIATION CRUD (with auto months)
+        //  ASSOCIATION CRUD (مع إمكانية تعديل الدفع الشهري)
         // ======================================================================
         function openAddAssociation() {
             document.getElementById('assocModalTitle').textContent = 'جمعية جديدة';
@@ -1902,25 +953,38 @@
             document.getElementById('assocNotes').value = '';
             const today = todayStr();
             document.getElementById('assocStart').value = today;
-            document.getElementById('assocStart').max = '2099-12-31';
             document.getElementById('assocMonths').value = '';
             document.getElementById('assocMonths').readOnly = true;
-            // bind events
-            document.getElementById('assocTotal').addEventListener('input', calcMonthly);
-            document.getElementById('assocMembersCount').addEventListener('input', calcMonthly);
+            // ربط الأحداث
+            document.getElementById('assocTotal').addEventListener('input', updateFromTotal);
+            document.getElementById('assocMonthly').addEventListener('input', updateFromMonthly);
+            document.getElementById('assocMembersCount').addEventListener('input', updateFromTotal);
             document.getElementById('assocStart').addEventListener('change', calcEndFromStart);
             document.getElementById('assocEnd').addEventListener('change', calcMonthsFromEnd);
-            calcMonthly();
+            updateFromTotal();
             calcEndFromStart();
             openModal('assocModal');
         }
 
-        function calcMonthly() {
+        function updateFromTotal() {
             const total = parseFloat(document.getElementById('assocTotal').value) || 0;
             const members = parseInt(document.getElementById('assocMembersCount').value) || 1;
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
             const monthly = members > 0 && months > 0 ? Math.round(total / months / members) : 0;
-            document.getElementById('assocMonthly').value = monthly > 0 ? formatCurrency(monthly) : '';
+            document.getElementById('assocMonthly').value = monthly > 0 ? monthly : '';
+            generateMemberInputs();
+        }
+
+        function updateFromMonthly() {
+            const monthly = parseFloat(document.getElementById('assocMonthly').value) || 0;
+            const members = parseInt(document.getElementById('assocMembersCount').value) || 1;
+            const months = parseInt(document.getElementById('assocMonths').value) || 1;
+            const total = monthly * members * months;
+            document.getElementById('assocTotal').value = total > 0 ? total : '';
+            generateMemberInputs();
+        }
+
+        function generateMemberInputs() {
             const count = parseInt(document.getElementById('assocMembersCount').value) || 0;
             const container = document.getElementById('membersNamesContainer');
             const group = document.getElementById('membersNamesGroup');
@@ -1948,8 +1012,7 @@
             const start = document.getElementById('assocStart').value;
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
             if (start && months > 0) {
-                const end = addMonths(start, months);
-                document.getElementById('assocEnd').value = end;
+                document.getElementById('assocEnd').value = addMonths(start, months);
             }
         }
 
@@ -1960,7 +1023,7 @@
                 const months = monthsBetween(start, end);
                 if (months > 0) {
                     document.getElementById('assocMonths').value = months;
-                    calcMonthly();
+                    updateFromTotal();
                 } else {
                     showToast('تاريخ النهاية يجب أن يكون بعد البداية', 'error');
                 }
@@ -1975,6 +1038,7 @@
             const startDate = document.getElementById('assocStart').value;
             const endDate = document.getElementById('assocEnd').value;
             const months = parseInt(document.getElementById('assocMonths').value);
+            const monthlyPayment = parseFloat(document.getElementById('assocMonthly').value) || 0;
             const notes = document.getElementById('assocNotes').value.trim();
             const editId = document.getElementById('editAssocId').value;
 
@@ -1984,19 +1048,15 @@
             if (!startDate) { showToast('يرجى اختيار تاريخ البداية', 'error'); return; }
             if (!endDate) { showToast('يرجى تحديد تاريخ النهاية', 'error'); return; }
             if (months < 1) { showToast('عدد الأشهر يجب أن يكون أكبر من صفر', 'error'); return; }
+            if (monthlyPayment <= 0) { showToast('يرجى إدخال قيمة دفع شهرية صحيحة', 'error'); return; }
 
             const nameInputs = document.querySelectorAll('.member-name-input');
             const memberNames = [];
-            nameInputs.forEach(inp => {
-                const val = inp.value.trim();
-                if (val) memberNames.push(val);
-            });
+            nameInputs.forEach(inp => { const val = inp.value.trim(); if (val) memberNames.push(val); });
             if (memberNames.length !== membersCount) {
                 showToast('يرجى إدخال أسماء جميع الأعضاء', 'error');
                 return;
             }
-
-            const monthlyPayment = Math.round(totalValue / months / membersCount);
 
             if (editId) {
                 const assoc = data.associations.find(a => a.id === parseInt(editId));
@@ -2040,27 +1100,22 @@
                     renderDashboard();
                 }
             } else {
-                const members = memberNames.map(name => ({
-                    id: genId(),
-                    name: name,
-                    payments: [],
-                    notes: ''
-                }));
+                const members = memberNames.map(name => ({ id: genId(), name, payments: [], notes: '' }));
                 const monthSeq = getMonthSequence(startDate, months);
                 const association = {
                     id: genId(),
-                    name: name,
-                    totalValue: totalValue,
-                    startDate: startDate,
-                    endDate: endDate,
+                    name,
+                    totalValue,
+                    startDate,
+                    endDate,
                     totalMonths: months,
-                    monthlyPayment: monthlyPayment,
-                    members: members,
+                    monthlyPayment,
+                    members,
                     months: monthSeq.map(m => ({ ...m, status: 'pending' })),
                     collectionOrder: members.map(m => m.id),
                     collectionIndex: 0,
                     status: 'active',
-                    notes: notes,
+                    notes,
                     createdAt: new Date().toISOString()
                 };
                 data.associations.push(association);
@@ -2083,6 +1138,7 @@
             document.getElementById('assocStart').value = assoc.startDate;
             document.getElementById('assocEnd').value = assoc.endDate;
             document.getElementById('assocMembersCount').value = assoc.members.length;
+            document.getElementById('assocMonthly').value = assoc.monthlyPayment;
             document.getElementById('assocNotes').value = assoc.notes || '';
             const container = document.getElementById('membersNamesContainer');
             const group = document.getElementById('membersNamesGroup');
@@ -2097,10 +1153,10 @@
                 `;
             });
             container.innerHTML = html;
-            calcMonthly();
-            // rebind events
-            document.getElementById('assocTotal').addEventListener('input', calcMonthly);
-            document.getElementById('assocMembersCount').addEventListener('input', calcMonthly);
+            // ربط الأحداث
+            document.getElementById('assocTotal').addEventListener('input', updateFromTotal);
+            document.getElementById('assocMonthly').addEventListener('input', updateFromMonthly);
+            document.getElementById('assocMembersCount').addEventListener('input', updateFromTotal);
             document.getElementById('assocStart').addEventListener('change', calcEndFromStart);
             document.getElementById('assocEnd').addEventListener('change', calcMonthsFromEnd);
             openModal('assocModal');
@@ -2114,14 +1170,12 @@
                 saveData();
                 showToast(`تم حذف جمعية "${assoc.name}"`, 'warning');
                 renderDashboard();
-                if (document.getElementById('page-detail').classList.contains('active')) {
-                    navigateTo('dashboard');
-                }
+                if (document.getElementById('page-detail').classList.contains('active')) navigateTo('dashboard');
             });
         }
 
         // ======================================================================
-        //  ADD MEMBER TO EXISTING ASSOCIATION
+        //  ADD MEMBER
         // ======================================================================
         function openAddMemberModal(assocId) {
             document.getElementById('addMemberAssocId').value = assocId;
@@ -2137,25 +1191,18 @@
             if (!name) { showToast('يرجى إدخال اسم العضو', 'error'); return; }
             const assoc = data.associations.find(a => a.id === assocId);
             if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
-            // Check duplicate
             if (assoc.members.some(m => m.name === name)) {
                 showToast('هذا الاسم موجود بالفعل', 'warning');
                 return;
             }
-            const newMember = {
-                id: genId(),
-                name: name,
-                payments: [],
-                notes: ''
-            };
+            const newMember = { id: genId(), name, payments: [], notes: '' };
             assoc.members.push(newMember);
-            // Update collection order
             assoc.collectionOrder.push(newMember.id);
-            // Update month statuses for existing months (set to pending if needed)
+            // إعادة حساب totalValue إذا تغير العدد
+            assoc.totalValue = assoc.monthlyPayment * assoc.members.length * assoc.totalMonths;
+            // تحديث حالة الأشهر المعلقة
             assoc.months.forEach(m => {
-                if (m.status !== 'closed' && m.status !== 'completed') {
-                    m.status = 'pending';
-                }
+                if (m.status !== 'closed' && m.status !== 'completed') m.status = 'pending';
             });
             saveData();
             showToast(`تم إضافة العضو "${name}" بنجاح`, 'success');
@@ -2310,69 +1357,75 @@
         }
 
         // ======================================================================
-        //  PAYMENT
+        //  PAYMENT (مع اختيار الشهر)
         // ======================================================================
         function openPaymentModal(assocId, memberId) {
             const assoc = data.associations.find(a => a.id === assocId);
             if (!assoc) { showToast('الجمعية غير موجودة', 'error'); return; }
             const member = assoc.members.find(m => m.id === memberId);
             if (!member) { showToast('العضو غير موجود', 'error'); return; }
-            const now = getCurrentMonth();
-            const monthKeyNow = monthKey(now.year, now.month);
-            const idx = getAssocMonthIndex(assoc, monthKeyNow);
-            if (idx < 0) { showToast('لا يوجد شهر حالي للجمعية', 'error'); return; }
-            const month = assoc.months[idx];
-            if (month.status === 'closed' || month.status === 'completed') {
-                showToast('هذا الشهر مغلق بالفعل', 'warning');
-                return;
-            }
-            const existing = getMemberPaymentForMonth(member, monthKeyNow);
-            if (existing && existing.paid) {
-                showToast('هذا العضو دفع بالفعل لهذا الشهر', 'warning');
-                return;
-            }
 
             document.getElementById('payAssocId').value = assocId;
             document.getElementById('payMemberId').value = memberId;
             document.getElementById('payMemberName').value = member.name;
             document.getElementById('payAmount').value = formatCurrency(assoc.monthlyPayment);
+
+            // تعبئة قائمة الأشهر
+            const select = document.getElementById('payMonthSelect');
+            select.innerHTML = '';
+            const now = getCurrentMonth();
+            const currentKey = monthKey(now.year, now.month);
+            assoc.months.forEach((m, idx) => {
+                const opt = document.createElement('option');
+                opt.value = m.key;
+                opt.textContent = m.label;
+                if (m.key === currentKey) opt.selected = true;
+                select.appendChild(opt);
+            });
+            // إذا كان هناك دفعة سابقة لهذا العضو، نختار شهرها
+            const existingPayment = member.payments.find(p => p.paid);
+            if (existingPayment) {
+                const found = Array.from(select.options).find(o => o.value === existingPayment.month);
+                if (found) found.selected = true;
+            }
+
             document.getElementById('payMethod').value = '';
             document.getElementById('payNote').value = '';
-            document.getElementById('payMonth').value = monthKeyNow;
             openModal('paymentModal');
         }
 
         function openAddPaymentForAssoc(assocId) {
             const assoc = data.associations.find(a => a.id === assocId);
             if (!assoc) return;
+            // البحث عن أول عضو لم يدفع في الشهر الحالي، أو أي عضو
             const now = getCurrentMonth();
             const mk = monthKey(now.year, now.month);
             const idx = getAssocMonthIndex(assoc, mk);
-            if (idx < 0) { showToast('لا يوجد شهر حالي', 'error'); return; }
-            const month = assoc.months[idx];
-            if (month.status === 'closed' || month.status === 'completed') {
-                showToast('الشهر الحالي مغلق', 'warning');
-                return;
+            let member = null;
+            if (idx >= 0) {
+                const unpaid = assoc.members.filter(m => {
+                    const p = getMemberPaymentForMonth(m, mk);
+                    return !p || !p.paid;
+                });
+                if (unpaid.length > 0) member = unpaid[0];
             }
-            const unpaid = assoc.members.filter(m => {
-                const p = getMemberPaymentForMonth(m, mk);
-                return !p || !p.paid;
-            });
-            if (unpaid.length === 0) {
-                showToast('جميع الأعضاء دفعوا لهذا الشهر', 'success');
-                return;
+            if (!member) {
+                // إذا كان الكل دفع أو لا يوجد شهر، نختار أول عضو
+                member = assoc.members[0];
+                if (!member) { showToast('لا يوجد أعضاء', 'error'); return; }
             }
-            openPaymentModal(assocId, unpaid[0].id);
+            openPaymentModal(assocId, member.id);
         }
 
         function recordPayment(e) {
             e.preventDefault();
             const assocId = parseInt(document.getElementById('payAssocId').value);
             const memberId = parseInt(document.getElementById('payMemberId').value);
+            const monthKey = document.getElementById('payMonthSelect').value;
             const method = document.getElementById('payMethod').value;
             const note = document.getElementById('payNote').value.trim();
-            const monthKey = document.getElementById('payMonth').value;
 
+            if (!monthKey) { showToast('يرجى اختيار الشهر', 'error'); return; }
             if (!method) { showToast('يرجى اختيار طريقة الدفع', 'error'); return; }
 
             const assoc = data.associations.find(a => a.id === assocId);
@@ -2382,18 +1435,9 @@
 
             const idx = getAssocMonthIndex(assoc, monthKey);
             if (idx < 0) { showToast('الشهر غير موجود', 'error'); return; }
-            const month = assoc.months[idx];
-            if (month.status === 'closed' || month.status === 'completed') {
-                showToast('هذا الشهر مغلق', 'error');
-                return;
-            }
 
-            const existing = getMemberPaymentForMonth(member, monthKey);
-            if (existing && existing.paid) {
-                showToast('هذا العضو دفع بالفعل لهذا الشهر', 'warning');
-                closeModal('paymentModal');
-                return;
-            }
+            // إزالة الدفعة القديمة لهذا الشهر إن وجدت
+            member.payments = member.payments.filter(p => p.month !== monthKey);
 
             const payment = {
                 month: monthKey,
@@ -2404,11 +1448,11 @@
                 time: new Date().toLocaleTimeString('ar-EG'),
                 note: note
             };
-
-            member.payments = member.payments.filter(p => p.month !== monthKey);
             member.payments.push(payment);
 
+            // تحديث حالة الشهر
             const progress = getAssocMonthProgress(assoc, idx);
+            const month = assoc.months[idx];
             if (progress.allPaid) {
                 month.status = 'completed';
                 addNotification('success', `✅ اكتمل تحصيل شهر ${month.label} في جمعية "${assoc.name}"`);
@@ -2428,7 +1472,7 @@
         }
 
         // ======================================================================
-        //  CLOSE MONTH
+        //  CLOSE MONTH (يظل ممكناً ولكن يمكن التراجع عنه)
         // ======================================================================
         function closeMonth(assocId) {
             const assoc = data.associations.find(a => a.id === assocId);
@@ -2439,7 +1483,18 @@
             if (idx < 0) { showToast('لا يوجد شهر حالي', 'error'); return; }
             const month = assoc.months[idx];
             if (month.status === 'closed' || month.status === 'completed') {
-                showToast('هذا الشهر مغلق بالفعل', 'warning');
+                // نعطي خيار إعادة فتح الشهر
+                confirmAction(`الشهر ${month.label} مغلق بالفعل. هل تريد إعادة فتحه؟`, () => {
+                    month.status = 'pending';
+                    // إعادة حساب حالة الشهر بناءً على الدفعات
+                    const progress = getAssocMonthProgress(assoc, idx);
+                    if (progress.allPaid) month.status = 'completed';
+                    else if (progress.paid > 0) month.status = 'partial';
+                    saveData();
+                    showToast(`تم إعادة فتح شهر ${month.label}`, 'info');
+                    renderAssociationDetail(assoc);
+                    renderDashboard();
+                });
                 return;
             }
             const progress = getAssocMonthProgress(assoc, idx);
@@ -2527,14 +1582,6 @@
             const totalPaid = member.payments.filter(p => p.paid).reduce((sum, p) => sum + p.amount, 0);
             const totalMonths = assoc.months.length;
             const paidMonths = member.payments.filter(p => p.paid).length;
-            const lateCount = member.payments.filter(p => {
-                if (!p.paid) return false;
-                const mk = p.month;
-                const parts = mk.split('-');
-                const mDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
-                const now = new Date();
-                return mDate < now;
-            }).length;
 
             document.getElementById('memberModalTitle').textContent = `👤 ${member.name}`;
             const container = document.getElementById('memberDetailContent');
@@ -2663,12 +1710,10 @@
                 renderNotificationsBadge(); }
         }
 
-        function toggleNotifications() {
-            navigateTo('notifications');
-        }
+        function toggleNotifications() { navigateTo('notifications'); }
 
         // ======================================================================
-        //  SETTINGS
+        //  SETTINGS (نفس السابق)
         // ======================================================================
         function renderSettings() {
             const s = data.settings;
@@ -2789,9 +1834,7 @@
             event.target.value = '';
         }
 
-        function backupData() {
-            exportData();
-        }
+        function backupData() { exportData(); }
 
         function clearAllData() {
             confirmAction('⚠️ هل أنت متأكد من مسح جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه.', () => {
@@ -2814,18 +1857,11 @@
                 month: 'long',
                 day: 'numeric'
             });
-
             applyTheme();
             renderDashboard();
-
-            if (data.associations.length === 0) {
-                createDemoData();
-            }
-
-            setInterval(() => {
-                renderDashboard();
-                checkPendingNotifications();
-            }, 60000);
+            if (data.associations.length === 0) createDemoData();
+            setInterval(() => { renderDashboard();
+                checkPendingNotifications(); }, 60000);
         }
 
         function createDemoData() {
@@ -2838,13 +1874,7 @@
             const membersCount = 10;
             const monthlyPayment = Math.round(totalValue / months / membersCount);
 
-            const members = demoMembers.slice(0, membersCount).map(name => ({
-                id: genId(),
-                name: name,
-                payments: [],
-                notes: ''
-            }));
-
+            const members = demoMembers.slice(0, membersCount).map(name => ({ id: genId(), name, payments: [], notes: '' }));
             const monthSeq = getMonthSequence(startDate, months);
             const monthsData = monthSeq.map((m, idx) => {
                 let status = 'pending';
@@ -2856,39 +1886,26 @@
             members.forEach((m, mi) => {
                 for (let i = 0; i < 3; i++) {
                     const mk = monthSeq[i].key;
-                    m.payments.push({
-                        month: mk,
-                        paid: true,
-                        amount: monthlyPayment,
-                        method: ['نقدي', 'تحويل بنكي', 'Vodafone Cash'][mi % 3],
-                        date: addMonths(startDate, i),
-                        time: '10:00',
-                        note: ''
-                    });
+                    m.payments.push({ month: mk, paid: true, amount: monthlyPayment, method: ['نقدي', 'تحويل بنكي',
+                            'Vodafone Cash'
+                        ][mi % 3], date: addMonths(startDate, i), time: '10:00', note: '' });
                 }
                 if (mi < 3) {
                     const mk = monthSeq[3].key;
-                    m.payments.push({
-                        month: mk,
-                        paid: true,
-                        amount: monthlyPayment,
-                        method: 'نقدي',
-                        date: addMonths(startDate, 3),
-                        time: '10:00',
-                        note: ''
-                    });
+                    m.payments.push({ month: mk, paid: true, amount: monthlyPayment, method: 'نقدي', date: addMonths(
+                            startDate, 3), time: '10:00', note: '' });
                 }
             });
 
             const assoc = {
                 id: genId(),
                 name: 'جمعية الأصدقاء',
-                totalValue: totalValue,
-                startDate: startDate,
+                totalValue,
+                startDate,
                 endDate: addMonths(startDate, months),
                 totalMonths: months,
-                monthlyPayment: monthlyPayment,
-                members: members,
+                monthlyPayment,
+                members,
                 months: monthsData,
                 collectionOrder: members.map(m => m.id),
                 collectionIndex: 3,
@@ -2896,7 +1913,6 @@
                 notes: 'جمعية تجريبية للأصدقاء',
                 createdAt: new Date().toISOString()
             };
-
             data.associations.push(assoc);
             saveData();
             addNotification('info', '📌 تم إنشاء بيانات تجريبية لتوضيح طريقة الاستخدام');
@@ -2910,20 +1926,16 @@
                 if (idx >= 0) {
                     const month = a.months[idx];
                     if (month.status !== 'closed' && month.status !== 'completed') {
-                        const progress = getAssocMonthProgress(a, idx);
                         const unpaid = a.members.filter(m => {
                             const p = getMemberPaymentForMonth(m, mk);
                             return !p || !p.paid;
                         });
                         if (unpaid.length > 0 && data.settings.notifications?.delay !== false) {
                             const hasNotif = data.notifications.some(n =>
-                                n.message.includes(a.name) && n.message.includes('لم يدفعوا') &&
-                                !n.read
+                                n.message.includes(a.name) && n.message.includes('لم يدفعوا') && !n.read
                             );
                             if (!hasNotif) {
-                                addNotification('warning',
-                                    `🟠 ${unpaid.length} عضو لم يدفعوا في جمعية "${a.name}" حتى الآن`
-                                );
+                                addNotification('warning', `🟠 ${unpaid.length} عضو لم يدفعوا في جمعية "${a.name}" حتى الآن`);
                             }
                         }
                     }
@@ -2935,4 +1947,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-    </html>
+</html>
