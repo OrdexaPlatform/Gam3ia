@@ -644,22 +644,21 @@
             return assoc.members.map(m => m.id);
         }
 
+        // المستحق للقبض بناءً على ترتيب القبض والتاريخ الحالي
         function getCurrentCollector(assoc) {
             const order = getCollectionOrder(assoc);
-            const idx = assoc.collectionIndex || 0;
-            if (idx >= order.length) return null;
+            // نحسب عدد الأشهر المغلقة أو المكتملة
+            let closedMonths = assoc.months.filter(m => m.status === 'closed' || m.status === 'completed').length;
+            // نأخذ المؤشر بناءً على الأشهر المغلقة
+            let idx = closedMonths % order.length;
+            if (idx >= order.length) idx = 0;
             const memberId = order[idx];
             return assoc.members.find(m => m.id === memberId) || null;
         }
 
         function advanceCollection(assoc) {
-            const order = getCollectionOrder(assoc);
-            const idx = (assoc.collectionIndex || 0) + 1;
-            if (idx < order.length) {
-                assoc.collectionIndex = idx;
-            } else {
-                assoc.collectionIndex = 0;
-            }
+            // يتم التقدم تلقائياً عند إغلاق الشهر
+            // لا حاجة لزيادة يدوية هنا، لأننا نعتمد على عدد الأشهر المغلقة
             saveData();
         }
 
@@ -956,7 +955,6 @@
             document.getElementById('assocMonths').value = '';
             document.getElementById('assocEnd').readOnly = true;
 
-            // ربط الأحداث
             document.getElementById('assocTotal').addEventListener('input', updateFromTotal);
             document.getElementById('assocMonthly').addEventListener('input', updateFromMonthly);
             document.getElementById('assocMembersCount').addEventListener('input', updateFromTotal);
@@ -1010,7 +1008,6 @@
             }
         }
 
-        // تاريخ النهاية = البداية + (عدد الأشهر - 1)
         function calcEndFromStart() {
             const start = document.getElementById('assocStart').value;
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
@@ -1040,7 +1037,6 @@
             if (months < 1) { showToast('عدد الأشهر يجب أن يكون أكبر من صفر', 'error'); return; }
             if (monthlyPayment <= 0) { showToast('يرجى إدخال قيمة دفع شهرية صحيحة', 'error'); return; }
 
-            // النهاية = البداية + (الأشهر - 1)
             const endDate = addMonths(startDate, months - 1);
 
             const nameInputs = document.querySelectorAll('.member-name-input');
@@ -1086,7 +1082,6 @@
                     if (!assoc.collectionOrder || assoc.collectionOrder.length !== newMembers.length) {
                         assoc.collectionOrder = newMembers.map(m => m.id);
                     }
-                    if (assoc.collectionIndex === undefined) assoc.collectionIndex = 0;
                     saveData();
                     showToast('تم تحديث الجمعية بنجاح', 'success');
                     closeModal('assocModal');
@@ -1106,7 +1101,6 @@
                     members,
                     months: monthSeq.map(m => ({ ...m, status: 'pending' })),
                     collectionOrder: members.map(m => m.id),
-                    collectionIndex: 0,
                     status: 'active',
                     notes,
                     createdAt: new Date().toISOString()
@@ -1147,7 +1141,6 @@
                 `;
             });
             container.innerHTML = html;
-            // ربط الأحداث
             document.getElementById('assocTotal').addEventListener('input', updateFromTotal);
             document.getElementById('assocMonthly').addEventListener('input', updateFromMonthly);
             document.getElementById('assocMembersCount').addEventListener('input', updateFromTotal);
@@ -1192,7 +1185,6 @@
             const newMember = { id: genId(), name, payments: [], notes: '' };
             assoc.members.push(newMember);
             assoc.collectionOrder.push(newMember.id);
-            // إعادة حساب totalValue
             assoc.totalValue = assoc.monthlyPayment * assoc.members.length * assoc.totalMonths;
             assoc.months.forEach(m => {
                 if (m.status !== 'closed' && m.status !== 'completed') m.status = 'pending';
@@ -1425,6 +1417,7 @@
             const idx = getAssocMonthIndex(assoc, monthKey);
             if (idx < 0) { showToast('الشهر غير موجود', 'error'); return; }
 
+            // حذف الدفعة القديمة لهذا الشهر إن وجدت
             member.payments = member.payments.filter(p => p.month !== monthKey);
 
             const payment = {
@@ -1438,15 +1431,13 @@
             };
             member.payments.push(payment);
 
+            // تحديث حالة الشهر
             const progress = getAssocMonthProgress(assoc, idx);
             const month = assoc.months[idx];
             if (progress.allPaid) {
                 month.status = 'completed';
                 addNotification('success', `✅ اكتمل تحصيل شهر ${month.label} في جمعية "${assoc.name}"`);
-                const collector = getCurrentCollector(assoc);
-                if (collector) {
-                    addNotification('info', `🎯 ${collector.name} هو المستحق للقبض في جمعية "${assoc.name}"`);
-                }
+                // تحديث المستحق للقبض تلقائياً (يتم من خلال getCurrentCollector)
             } else {
                 month.status = 'partial';
             }
@@ -1459,7 +1450,7 @@
         }
 
         // ======================================================================
-        //  CLOSE MONTH
+        //  CLOSE MONTH (إغلاق الشهر مع تحديث ترتيب القبض)
         // ======================================================================
         function closeMonth(assocId) {
             const assoc = data.associations.find(a => a.id === assocId);
@@ -1497,15 +1488,10 @@
         function doCloseMonth(assoc, idx) {
             const month = assoc.months[idx];
             month.status = 'closed';
+            // تحديث المستحق للقبض (يتم تلقائياً من getCurrentCollector)
             const collector = getCurrentCollector(assoc);
             if (collector) {
-                addNotification('success', `🎯 ${collector.name} قبض ${formatCurrency(assoc.monthlyPayment * assoc.members.length)} في ${month.label}`);
-            }
-            advanceCollection(assoc);
-            const allDone = assoc.months.every(m => m.status === 'closed' || m.status === 'completed');
-            if (allDone) {
-                assoc.status = 'completed';
-                addNotification('success', `🎉 اكتملت جمعية "${assoc.name}" بالكامل`);
+                addNotification('success', `🎯 ${collector.name} هو المستحق للقبض في جمعية "${assoc.name}"`);
             }
             saveData();
             showToast(`تم إغلاق شهر ${month.label}`, 'success');
@@ -1887,13 +1873,12 @@
                 name: 'جمعية الأصدقاء',
                 totalValue,
                 startDate,
-                endDate: addMonths(startDate, months - 1), // النهاية = البداية + (الأشهر - 1)
+                endDate: addMonths(startDate, months - 1),
                 totalMonths: months,
                 monthlyPayment,
                 members,
                 months: monthsData,
                 collectionOrder: members.map(m => m.id),
-                collectionIndex: 3,
                 status: 'active',
                 notes: 'جمعية تجريبية للأصدقاء',
                 createdAt: new Date().toISOString()
