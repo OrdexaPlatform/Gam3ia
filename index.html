@@ -940,7 +940,7 @@
         }
 
         // ======================================================================
-        //  ASSOCIATION CRUD (مع حساب النهاية تلقائياً)
+        //  ASSOCIATION CRUD (النهاية = البداية + (الأشهر - 1))
         // ======================================================================
         function openAddAssociation() {
             document.getElementById('assocModalTitle').textContent = 'جمعية جديدة';
@@ -1010,11 +1010,12 @@
             }
         }
 
+        // تاريخ النهاية = البداية + (عدد الأشهر - 1)
         function calcEndFromStart() {
             const start = document.getElementById('assocStart').value;
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
             if (start && months > 0) {
-                const end = addMonths(start, months);
+                const end = addMonths(start, months - 1);
                 document.getElementById('assocEnd').value = end;
             } else {
                 document.getElementById('assocEnd').value = '';
@@ -1039,8 +1040,8 @@
             if (months < 1) { showToast('عدد الأشهر يجب أن يكون أكبر من صفر', 'error'); return; }
             if (monthlyPayment <= 0) { showToast('يرجى إدخال قيمة دفع شهرية صحيحة', 'error'); return; }
 
-            // حساب النهاية تلقائياً
-            const endDate = addMonths(startDate, months);
+            // النهاية = البداية + (الأشهر - 1)
+            const endDate = addMonths(startDate, months - 1);
 
             const nameInputs = document.querySelectorAll('.member-name-input');
             const memberNames = [];
@@ -1886,7 +1887,7 @@
                 name: 'جمعية الأصدقاء',
                 totalValue,
                 startDate,
-                endDate: addMonths(startDate, months),
+                endDate: addMonths(startDate, months - 1), // النهاية = البداية + (الأشهر - 1)
                 totalMonths: months,
                 monthlyPayment,
                 members,
