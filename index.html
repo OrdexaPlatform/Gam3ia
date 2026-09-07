@@ -359,14 +359,14 @@
                         <input type="date" id="assocStart" required />
                     </div>
                     <div class="form-group">
-                        <label>تاريخ النهاية (قابل للتعديل)</label>
-                        <input type="date" id="assocEnd" />
+                        <label>عدد الأشهر <span style="color:var(--danger);">*</span></label>
+                        <input type="number" id="assocMonths" placeholder="10" required min="1" />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>عدد الأشهر (يحسب تلقائياً)</label>
-                        <input type="number" id="assocMonths" placeholder="10" min="1" readonly style="background:var(--gray-light);" />
+                        <label>تاريخ النهاية (يحسب تلقائياً)</label>
+                        <input type="date" id="assocEnd" readonly style="background:var(--gray-light);" />
                     </div>
                     <div class="form-group">
                         <label>قيمة الدفع الشهري لكل عضو (قابل للتعديل)</label>
@@ -540,7 +540,7 @@
         function genId() { return data.nextId++; }
 
         // ======================================================================
-        //  HELPERS (نفس السابق)
+        //  HELPERS
         // ======================================================================
         function formatCurrency(amount) {
             return Number(amount).toLocaleString('ar-EG') + ' ' + data.settings.currency;
@@ -940,7 +940,7 @@
         }
 
         // ======================================================================
-        //  ASSOCIATION CRUD (مع إمكانية تعديل الدفع الشهري)
+        //  ASSOCIATION CRUD (مع حساب النهاية تلقائياً)
         // ======================================================================
         function openAddAssociation() {
             document.getElementById('assocModalTitle').textContent = 'جمعية جديدة';
@@ -954,13 +954,15 @@
             const today = todayStr();
             document.getElementById('assocStart').value = today;
             document.getElementById('assocMonths').value = '';
-            document.getElementById('assocMonths').readOnly = true;
+            document.getElementById('assocEnd').readOnly = true;
+
             // ربط الأحداث
             document.getElementById('assocTotal').addEventListener('input', updateFromTotal);
             document.getElementById('assocMonthly').addEventListener('input', updateFromMonthly);
             document.getElementById('assocMembersCount').addEventListener('input', updateFromTotal);
             document.getElementById('assocStart').addEventListener('change', calcEndFromStart);
-            document.getElementById('assocEnd').addEventListener('change', calcMonthsFromEnd);
+            document.getElementById('assocMonths').addEventListener('input', calcEndFromStart);
+
             updateFromTotal();
             calcEndFromStart();
             openModal('assocModal');
@@ -1012,21 +1014,10 @@
             const start = document.getElementById('assocStart').value;
             const months = parseInt(document.getElementById('assocMonths').value) || 1;
             if (start && months > 0) {
-                document.getElementById('assocEnd').value = addMonths(start, months);
-            }
-        }
-
-        function calcMonthsFromEnd() {
-            const start = document.getElementById('assocStart').value;
-            const end = document.getElementById('assocEnd').value;
-            if (start && end) {
-                const months = monthsBetween(start, end);
-                if (months > 0) {
-                    document.getElementById('assocMonths').value = months;
-                    updateFromTotal();
-                } else {
-                    showToast('تاريخ النهاية يجب أن يكون بعد البداية', 'error');
-                }
+                const end = addMonths(start, months);
+                document.getElementById('assocEnd').value = end;
+            } else {
+                document.getElementById('assocEnd').value = '';
             }
         }
 
@@ -1036,7 +1027,6 @@
             const totalValue = parseFloat(document.getElementById('assocTotal').value);
             const membersCount = parseInt(document.getElementById('assocMembersCount').value);
             const startDate = document.getElementById('assocStart').value;
-            const endDate = document.getElementById('assocEnd').value;
             const months = parseInt(document.getElementById('assocMonths').value);
             const monthlyPayment = parseFloat(document.getElementById('assocMonthly').value) || 0;
             const notes = document.getElementById('assocNotes').value.trim();
@@ -1046,9 +1036,11 @@
             if (!totalValue || totalValue <= 0) { showToast('يرجى إدخال قيمة الجمعية الإجمالية', 'error'); return; }
             if (!membersCount || membersCount < 1) { showToast('يرجى إدخال عدد الأعضاء', 'error'); return; }
             if (!startDate) { showToast('يرجى اختيار تاريخ البداية', 'error'); return; }
-            if (!endDate) { showToast('يرجى تحديد تاريخ النهاية', 'error'); return; }
             if (months < 1) { showToast('عدد الأشهر يجب أن يكون أكبر من صفر', 'error'); return; }
             if (monthlyPayment <= 0) { showToast('يرجى إدخال قيمة دفع شهرية صحيحة', 'error'); return; }
+
+            // حساب النهاية تلقائياً
+            const endDate = addMonths(startDate, months);
 
             const nameInputs = document.querySelectorAll('.member-name-input');
             const memberNames = [];
@@ -1137,6 +1129,7 @@
             document.getElementById('assocMonths').value = assoc.totalMonths;
             document.getElementById('assocStart').value = assoc.startDate;
             document.getElementById('assocEnd').value = assoc.endDate;
+            document.getElementById('assocEnd').readOnly = true;
             document.getElementById('assocMembersCount').value = assoc.members.length;
             document.getElementById('assocMonthly').value = assoc.monthlyPayment;
             document.getElementById('assocNotes').value = assoc.notes || '';
@@ -1158,7 +1151,7 @@
             document.getElementById('assocMonthly').addEventListener('input', updateFromMonthly);
             document.getElementById('assocMembersCount').addEventListener('input', updateFromTotal);
             document.getElementById('assocStart').addEventListener('change', calcEndFromStart);
-            document.getElementById('assocEnd').addEventListener('change', calcMonthsFromEnd);
+            document.getElementById('assocMonths').addEventListener('input', calcEndFromStart);
             openModal('assocModal');
         }
 
@@ -1198,9 +1191,8 @@
             const newMember = { id: genId(), name, payments: [], notes: '' };
             assoc.members.push(newMember);
             assoc.collectionOrder.push(newMember.id);
-            // إعادة حساب totalValue إذا تغير العدد
+            // إعادة حساب totalValue
             assoc.totalValue = assoc.monthlyPayment * assoc.members.length * assoc.totalMonths;
-            // تحديث حالة الأشهر المعلقة
             assoc.months.forEach(m => {
                 if (m.status !== 'closed' && m.status !== 'completed') m.status = 'pending';
             });
@@ -1370,7 +1362,6 @@
             document.getElementById('payMemberName').value = member.name;
             document.getElementById('payAmount').value = formatCurrency(assoc.monthlyPayment);
 
-            // تعبئة قائمة الأشهر
             const select = document.getElementById('payMonthSelect');
             select.innerHTML = '';
             const now = getCurrentMonth();
@@ -1382,7 +1373,6 @@
                 if (m.key === currentKey) opt.selected = true;
                 select.appendChild(opt);
             });
-            // إذا كان هناك دفعة سابقة لهذا العضو، نختار شهرها
             const existingPayment = member.payments.find(p => p.paid);
             if (existingPayment) {
                 const found = Array.from(select.options).find(o => o.value === existingPayment.month);
@@ -1397,7 +1387,6 @@
         function openAddPaymentForAssoc(assocId) {
             const assoc = data.associations.find(a => a.id === assocId);
             if (!assoc) return;
-            // البحث عن أول عضو لم يدفع في الشهر الحالي، أو أي عضو
             const now = getCurrentMonth();
             const mk = monthKey(now.year, now.month);
             const idx = getAssocMonthIndex(assoc, mk);
@@ -1410,7 +1399,6 @@
                 if (unpaid.length > 0) member = unpaid[0];
             }
             if (!member) {
-                // إذا كان الكل دفع أو لا يوجد شهر، نختار أول عضو
                 member = assoc.members[0];
                 if (!member) { showToast('لا يوجد أعضاء', 'error'); return; }
             }
@@ -1436,7 +1424,6 @@
             const idx = getAssocMonthIndex(assoc, monthKey);
             if (idx < 0) { showToast('الشهر غير موجود', 'error'); return; }
 
-            // إزالة الدفعة القديمة لهذا الشهر إن وجدت
             member.payments = member.payments.filter(p => p.month !== monthKey);
 
             const payment = {
@@ -1450,7 +1437,6 @@
             };
             member.payments.push(payment);
 
-            // تحديث حالة الشهر
             const progress = getAssocMonthProgress(assoc, idx);
             const month = assoc.months[idx];
             if (progress.allPaid) {
@@ -1472,7 +1458,7 @@
         }
 
         // ======================================================================
-        //  CLOSE MONTH (يظل ممكناً ولكن يمكن التراجع عنه)
+        //  CLOSE MONTH
         // ======================================================================
         function closeMonth(assocId) {
             const assoc = data.associations.find(a => a.id === assocId);
@@ -1483,10 +1469,8 @@
             if (idx < 0) { showToast('لا يوجد شهر حالي', 'error'); return; }
             const month = assoc.months[idx];
             if (month.status === 'closed' || month.status === 'completed') {
-                // نعطي خيار إعادة فتح الشهر
                 confirmAction(`الشهر ${month.label} مغلق بالفعل. هل تريد إعادة فتحه؟`, () => {
                     month.status = 'pending';
-                    // إعادة حساب حالة الشهر بناءً على الدفعات
                     const progress = getAssocMonthProgress(assoc, idx);
                     if (progress.allPaid) month.status = 'completed';
                     else if (progress.paid > 0) month.status = 'partial';
@@ -1713,7 +1697,7 @@
         function toggleNotifications() { navigateTo('notifications'); }
 
         // ======================================================================
-        //  SETTINGS (نفس السابق)
+        //  SETTINGS
         // ======================================================================
         function renderSettings() {
             const s = data.settings;
